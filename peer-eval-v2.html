@@ -582,7 +582,7 @@ let GROUPS = {};
 let SHEETS_CONFIG = {
   url:'https://docs.google.com/spreadsheets/d/15jVzw330ZMquPtvGrfMUF06tBpFzcISa7zg7UUpmP0A/edit?usp=sharing',
   scriptUrl:'https://script.google.com/macros/s/AKfycbynRV8P3dsU4Cia89EypthRzpqoPg-Hty5GQB1l_3KDiVyxOZ7g82C8nt8-_ZU_LWMOJw/exec',
-  sheetName:'인원목록',
+  sheetName:'인턴목록',
   connected:true,
 };
 
@@ -1465,7 +1465,7 @@ function renderCandImportTab(){
       <div class="form-group">
         <label class="form-label">시트(탭) 이름</label>
         <div style="display:flex;gap:8px">
-          <input class="form-input" id="rv-sheet-name" placeholder="인원목록" value="${SHEETS_CONFIG.sheetName||'인원목록'}" style="flex:1">
+          <input class="form-input" id="rv-sheet-name" placeholder="인턴목록" value="${SHEETS_CONFIG.sheetName||'인턴목록'}" style="flex:1">
           <button class="add-btn" style="padding:10px 18px" onclick="fetchCandsFromSheets()" ${!hasUrl?'disabled':''}>📥 불러오기</button>
         </div>
         <div id="rv-import-status" style="margin-top:8px;font-size:12px;color:var(--text3)"></div>
@@ -1488,7 +1488,7 @@ async function fetchSheetData(sheetName) {
 
 async function fetchCandsFromSheets(){
   if(!SHEETS_CONFIG.scriptUrl){showToast('⚠ 먼저 Google Sheets 탭에서 URL을 입력하세요');return;}
-  const sheetName=document.getElementById('rv-sheet-name')?.value.trim()||'인원목록';
+  const sheetName=document.getElementById('rv-sheet-name')?.value.trim()||'인턴목록';
   SHEETS_CONFIG.sheetName=sheetName; saveToLS();
   const statusEl=document.getElementById('rv-import-status');
   if(statusEl)statusEl.innerHTML='<span style="color:var(--dw-orange)">⏳ 불러오는 중...</span>';
