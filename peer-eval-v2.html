@@ -597,28 +597,38 @@ const LS = {
 };
 function saveToLS() {
   try {
-    Object.entries({
-      [LS.EVAL]:evalData, [LS.GROUPS]:GROUPS, [LS.SHEETS]:SHEETS_CONFIG,
-      [LS.CANDS]:CANDIDATES, [LS.REVIEWERS]:REVIEWERS, [LS.HISTORY]:evalHistory,
-    }).forEach(([k,v])=>localStorage.setItem(k,JSON.stringify(v)));
+    // evalData(점수)와 evalHistory만 저장
+    // GROUPS/CANDIDATES/REVIEWERS는 항상 시트에서 불러오므로 저장 안 함
+    localStorage.setItem(LS.EVAL, JSON.stringify(evalData));
+    localStorage.setItem(LS.HISTORY, JSON.stringify(evalHistory));
+    localStorage.setItem(LS.SHEETS, JSON.stringify({
+      scriptUrl: SHEETS_CONFIG.scriptUrl,
+      url: SHEETS_CONFIG.url,
+    }));
   } catch(e){}
 }
 function loadFromLS() {
   try {
+    // evalData(점수)와 evalHistory만 localStorage에서 복원
+    // GROUPS/CANDIDATES/REVIEWERS는 항상 구글 시트에서 실시간으로 불러옴
     const d=localStorage.getItem(LS.EVAL); if(d) evalData=JSON.parse(d);
-    const g=localStorage.getItem(LS.GROUPS); if(g) GROUPS=JSON.parse(g);
-    const s=localStorage.getItem(LS.SHEETS); if(s) {
-      const parsed=JSON.parse(s);
-      // 시트명이 잘못된 경우 인턴목록으로 보정
-      if(parsed.sheetName==='인원목록') parsed.sheetName='인턴목록';
-      SHEETS_CONFIG=parsed;
-    }
-    const ca=localStorage.getItem(LS.CANDS); if(ca){const p=JSON.parse(ca);if(p.length)CANDIDATES.splice(0,CANDIDATES.length,...p);}
-    const rv=localStorage.getItem(LS.REVIEWERS); if(rv){const p=JSON.parse(rv);if(Object.keys(p).length)Object.assign(REVIEWERS,p);}
     const hi=localStorage.getItem(LS.HISTORY); if(hi) evalHistory=JSON.parse(hi);
+    // SHEETS_CONFIG는 scriptUrl만 복원 (sheetName 보정 제거)
+    const s=localStorage.getItem(LS.SHEETS);
+    if(s) {
+      const parsed=JSON.parse(s);
+      if(parsed.scriptUrl) SHEETS_CONFIG.scriptUrl=parsed.scriptUrl;
+      if(parsed.url) SHEETS_CONFIG.url=parsed.url;
+    }
   } catch(e){}
 }
 loadFromLS();
+// 이전 버전 localStorage 캐시 제거 (GROUPS/CANDIDATES/REVIEWERS는 항상 시트에서 불러옴)
+try {
+  localStorage.removeItem(LS.GROUPS);
+  localStorage.removeItem(LS.CANDS);
+  localStorage.removeItem(LS.REVIEWERS);
+} catch(e){}
 
 /* ══ GOOGLE SHEETS 실시간 동기화 ══
    인원목록: A사번 B이름 C1차OJT D2차OJT E과제명 F그룹 G활성화(Y/N)
@@ -1412,7 +1422,7 @@ function renderCandImportTab(){
       <div class="form-group">
         <label class="form-label">시트(탭) 이름</label>
         <div style="display:flex;gap:8px">
-          <input class="form-input" id="rv-sheet-name" placeholder="인턴목록" value="${SHEETS_CONFIG.sheetName||'인턴목록'}" style="flex:1">
+          <input class="form-input" id="rv-sheet-name" placeholder="인원목록" value="${SHEETS_CONFIG.sheetName||'인원목록'}" style="flex:1">
           <button class="add-btn" style="padding:10px 18px" onclick="fetchCandsFromSheets()" ${!hasUrl?'disabled':''}>📥 불러오기</button>
         </div>
         <div id="rv-import-status" style="margin-top:8px;font-size:12px;color:var(--text3)"></div>
@@ -1435,7 +1445,7 @@ async function fetchSheetData(sheetName) {
 
 async function fetchCandsFromSheets(){
   if(!SHEETS_CONFIG.scriptUrl){showToast('⚠ 먼저 Google Sheets 탭에서 URL을 입력하세요');return;}
-  const sheetName=document.getElementById('rv-sheet-name')?.value.trim()||'인턴목록';
+  const sheetName=document.getElementById('rv-sheet-name')?.value.trim()||'인원목록';
   SHEETS_CONFIG.sheetName=sheetName; saveToLS();
   const statusEl=document.getElementById('rv-import-status');
   if(statusEl)statusEl.innerHTML='<span style="color:var(--dw-orange)">⏳ 불러오는 중...</span>';
