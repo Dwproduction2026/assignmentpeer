@@ -663,6 +663,9 @@ async function syncFromSheets(silent) {
       fetchSheet('평가자목록'),
     ]);
 
+    console.log('[SYNC] 인원목록 rows:', candRows.length, candRows);
+    console.log('[SYNC] 평가자목록 rows:', rvRows.length, rvRows);
+
     // 인원목록: A사번 B이름 C1차OJT D2차OJT E과제명 F그룹 G활성화(Y/N)
     if (candRows.length) {
       const newCands = candRows.map(row => ({
@@ -711,6 +714,10 @@ async function syncFromSheets(silent) {
           .map(c => c.id),
       };
     });
+
+    console.log('[SYNC] 최종 CANDIDATES:', CANDIDATES.length, CANDIDATES.map(c=>c.name+'/'+c.group+'/active:'+c.active));
+    console.log('[SYNC] 최종 REVIEWERS:', Object.keys(REVIEWERS).length, Object.entries(REVIEWERS).map(([id,r])=>id+'/'+r.name+'/group:'+r.group));
+    console.log('[SYNC] 최종 GROUPS:', JSON.stringify(GROUPS, null, 2));
 
     saveToLS();
     if (!silent) showToast('✅ 동기화 완료');
