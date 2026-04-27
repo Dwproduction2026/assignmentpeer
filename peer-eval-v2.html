@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대웅 과제발표 피어그룹 평가 · Peer Evaluation</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dw-orange:  #E87722;
+  --dw-orange2: #F5A623;
+  --bg:         #F8F6F2;
+  --surface:    #FFFFFF;
+  --surface2:   #FFF4EA;
+  --surface3:   #FDEBD8;
+  --border:     #EDE0D0;
+  --border2:    #D9C4A8;
+  --accent:     #E87722;
+  --accent-dk:  #C45E0A;
+  --text:       #2B1A0A;
+  --text2:      #5C4030;
+  --text3:      #A08060;
+  --text4:      #C8AA90;
+  --s-color:    #1a6b3a;
+  --a-color:    #1a4f6b;
+  --bplus-color:#4a3a8c;
+  --b-color:    #7a5c10;
+  --c-color:    #8c3a2a;
+  --red:        #D94020;
+  --green:      #2d6a4f;
+  --shadow:     0 1px 3px rgba(232,119,34,0.08), 0 4px 16px rgba(232,119,34,0.05);
+  --shadow-lg:  0 4px 24px rgba(232,119,34,0.14), 0 1px 4px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:15px; }
+body { font-family:'Noto Sans KR',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+.screen { display:none; min-height:100vh; }
+.screen.active { display:flex; flex-direction:column; }
+
+/* ══ SPLASH ══ */
+#splash {
+  background:linear-gradient(135deg,#FFF4E8 0%,#FDEBD0 60%,#FDE8CC 100%);
+  align-items:center; justify-content:center; position:relative; overflow:hidden;
+}
+.splash-grid {
+  position:absolute; inset:0;
+  background-image:radial-gradient(circle,rgba(232,119,34,0.07) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.splash-deco {
+  position:absolute; font-family:'Bebas Neue',sans-serif;
+  color:rgba(232,119,34,0.06); font-size:260px; line-height:1;
+  right:-20px; bottom:-30px; user-select:none;
+}
+#splash::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:6px;
+  background:linear-gradient(180deg,var(--dw-orange),var(--dw-orange2));
+}
+.splash-inner { position:relative; z-index:1; text-align:center; padding:0 24px; }
+.splash-tag {
+  display:inline-block; padding:5px 16px; border:1px solid rgba(232,119,34,0.3);
+  font-size:11px; letter-spacing:3px; color:var(--text3); text-transform:uppercase;
+  margin-bottom:24px; animation:fadeUp 0.6s ease both;
+}
+.splash-h {
+  font-size:clamp(38px,6vw,68px); font-weight:900; line-height:1.1;
+  color:var(--text); margin-bottom:6px; letter-spacing:-1px;
+  animation:fadeUp 0.6s ease 0.1s both;
+}
+.splash-h span { color:var(--dw-orange); }
+.splash-en {
+  font-size:15px; font-weight:600; color:var(--text2); letter-spacing:0.5px;
+  margin-top:14px; margin-bottom:38px; animation:fadeUp 0.6s ease 0.15s both;
+}
+.splash-brand {
+  font-size:22px; font-weight:800; color:var(--dw-orange); letter-spacing:3px;
+  margin-bottom:36px; animation:fadeUp 0.6s ease 0.2s both;
+}
+.splash-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:16px 44px; background:var(--dw-orange); color:#fff;
+  border:none; font-family:'Noto Sans KR',sans-serif; font-size:15px; font-weight:700;
+  cursor:pointer; letter-spacing:1px; border-radius:2px; transition:all 0.2s;
+  animation:fadeUp 0.6s ease 0.3s both; box-shadow:0 4px 20px rgba(232,119,34,0.35);
+}
+.splash-btn:hover { background:var(--accent-dk); transform:translateY(-2px); }
+.splash-contact {
+  margin-top:28px; font-size:12px; color:var(--text3);
+  animation:fadeUp 0.6s ease 0.4s both; line-height:2;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
+
+/* ══ LOGIN ══ */
+#login { background:linear-gradient(135deg,#FFF4E8,#F8F6F2); align-items:center; justify-content:center; }
+.login-wrap { width:100%; max-width:480px; padding:24px; }
+.login-back {
+  display:inline-flex; align-items:center; gap:6px; background:none; border:none;
+  color:var(--text3); font-size:13px; cursor:pointer; margin-bottom:36px;
+  font-family:inherit; transition:color 0.2s;
+}
+.login-back:hover { color:var(--accent); }
+.login-card {
+  background:var(--surface); border:1px solid var(--border);
+  padding:40px; box-shadow:0 8px 40px rgba(232,119,34,0.12);
+  border-top:4px solid var(--dw-orange);
+}
+.login-logo-text { font-size:16px; font-weight:900; color:var(--dw-orange); letter-spacing:1px; margin-bottom:24px; line-height:1.5; }
+.login-h { font-size:24px; font-weight:800; margin-bottom:6px; }
+.login-desc { font-size:13px; color:var(--text3); margin-bottom:28px; line-height:1.7; }
+.tab-row { display:flex; border-bottom:2px solid var(--border); margin-bottom:28px; }
+.tab-btn {
+  flex:1; padding:12px; background:none; border:none; cursor:pointer;
+  font-size:13px; font-weight:600; color:var(--text3); font-family:inherit;
+  border-bottom:2px solid transparent; margin-bottom:-2px; transition:all 0.2s;
+}
+.tab-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
+.form-group { margin-bottom:18px; }
+.form-label { display:block; font-size:11px; font-weight:700; color:var(--text3); margin-bottom:7px; letter-spacing:1px; text-transform:uppercase; }
+.form-input {
+  width:100%; padding:12px 14px; border:1px solid var(--border);
+  background:var(--surface2); color:var(--text); font-size:14px;
+  outline:none; transition:border 0.2s, background 0.2s; font-family:inherit; border-radius:2px;
+}
+.form-input:focus { border-color:var(--accent); background:var(--surface); }
+.form-input::placeholder { color:var(--text4); }
+.login-submit {
+  width:100%; padding:14px; background:var(--dw-orange); color:#fff;
+  border:none; font-size:14px; font-weight:700; cursor:pointer; border-radius:2px;
+  font-family:inherit; letter-spacing:1px; transition:all 0.2s; margin-top:4px;
+}
+.login-submit:hover { background:var(--accent-dk); }
+.login-err { color:var(--red); font-size:12px; margin-top:12px; text-align:center; display:none; line-height:1.8; }
+
+/* ══ APP LAYOUT ══ */
+.app-layout { display:flex; height:100vh; overflow:hidden; }
+.sidebar {
+  width:272px; flex-shrink:0; background:#2c3140;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.sidebar-top { padding:20px; border-bottom:1px solid rgba(255,255,255,0.08); }
+.sidebar-logo { font-size:13px; font-weight:900; letter-spacing:1px; color:rgba(255,255,255,0.85); }
+.sidebar-prog { font-size:11px; color:rgba(255,255,255,0.4); margin-top:3px; }
+.user-block { padding:16px 20px; border-bottom:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; gap:12px; }
+.user-av { width:38px; height:38px; background:var(--dw-orange); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#fff; border-radius:50%; }
+.user-name { font-size:13px; font-weight:700; color:#fff; }
+.user-role { font-size:11px; color:rgba(255,255,255,0.4); margin-top:2px; }
+.sidebar-tabs { display:flex; gap:6px; padding:10px 16px; border-bottom:1px solid rgba(255,255,255,0.06); }
+.sidebar-tab-btn { flex:1; padding:9px; background:rgba(255,255,255,0.07); border:none; color:rgba(255,255,255,0.6); font-size:11px; font-weight:600; border-radius:2px; cursor:pointer; font-family:inherit; transition:all 0.2s; }
+.sidebar-tab-btn.active { background:rgba(255,255,255,0.14); color:#fff; }
+.search-wrap { padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.06); }
+.sidebar-search { width:100%; padding:8px 12px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); color:#fff; font-size:13px; outline:none; font-family:inherit; border-radius:2px; }
+.sidebar-search::placeholder { color:rgba(255,255,255,0.3); }
+.cand-list { flex:1; overflow-y:auto; padding:8px; }
+.cand-item { padding:10px 12px; cursor:pointer; margin-bottom:2px; transition:background 0.15s; border:1px solid transparent; border-radius:2px; }
+.cand-item:hover { background:rgba(255,255,255,0.07); }
+.cand-item.active { background:rgba(232,119,34,0.18); border-color:rgba(232,119,34,0.4); }
+.cand-item-name { font-size:13px; font-weight:700; color:#fff; }
+.cand-item-sub { font-size:11px; color:rgba(255,255,255,0.45); margin-top:2px; }
+.cand-item-badges { display:flex; align-items:center; gap:6px; margin-top:6px; flex-wrap:wrap; }
+.badge-status { padding:2px 8px; font-size:10px; font-weight:700; letter-spacing:0.5px; border-radius:2px; }
+.badge-done  { background:rgba(45,106,79,0.35); color:#7effc8; }
+.badge-draft { background:rgba(232,119,34,0.2); color:#ffd0a0; }
+.badge-todo  { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.55); }
+.badge-grade { padding:2px 8px; font-size:10px; font-weight:800; background:rgba(232,119,34,0.25); color:var(--dw-orange); border-radius:2px; }
+.badge-score { font-size:11px; color:rgba(255,255,255,0.5); }
+.sidebar-foot { padding:14px; border-top:1px solid rgba(255,255,255,0.07); display:flex; flex-direction:column; gap:6px; }
+.foot-btn { flex:1; padding:9px; background:rgba(255,255,255,0.07); border:none; color:rgba(255,255,255,0.6); font-size:12px; font-weight:600; border-radius:2px; cursor:pointer; font-family:inherit; transition:all 0.2s; }
+.foot-btn:hover { background:rgba(255,255,255,0.13); color:#fff; }
+.foot-btn.red { background:rgba(200,65,10,0.12); color:rgba(255,160,130,0.9); }
+.foot-btn.orange { background:var(--dw-orange); color:#fff; font-weight:800; }
+
+/* ══ MAIN AREA ══ */
+.main-area { flex:1; display:flex; flex-direction:column; overflow:hidden; background:var(--bg); }
+.main-header {
+  padding:20px 32px; border-bottom:1px solid var(--border);
+  background:var(--surface); display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
+  border-top:3px solid var(--dw-orange);
+}
+.main-title { font-size:20px; font-weight:800; color:var(--text); }
+.main-sub { font-size:12px; color:var(--text3); margin-top:3px; }
+.main-body { flex:1; overflow-y:auto; padding:28px 32px; }
+.autosave-ind { font-size:11px; color:var(--text4); display:flex; align-items:center; gap:5px; white-space:nowrap; }
+.autosave-dot { width:6px; height:6px; border-radius:50%; background:var(--text4); transition:background 0.3s; }
+.autosave-dot.saved { background:var(--green); }
+
+/* ══ EVAL FORM ══ */
+.cand-card {
+  background:linear-gradient(135deg,var(--dw-orange),var(--dw-orange2));
+  color:#fff; padding:24px 28px; margin-bottom:20px; position:relative; overflow:hidden; border-radius:2px;
+}
+.cand-card::before { content:'PEER'; font-family:'Bebas Neue',sans-serif; font-size:110px; position:absolute; right:-10px; bottom:-16px; color:rgba(255,255,255,0.07); line-height:1; pointer-events:none; }
+.cand-card-name { font-size:24px; font-weight:800; margin-bottom:4px; }
+.cand-card-id { font-size:12px; color:rgba(255,255,255,0.6); margin-bottom:14px; letter-spacing:1px; }
+.cand-card-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+.cand-card-field label { font-size:10px; color:rgba(255,255,255,0.55); letter-spacing:1.5px; text-transform:uppercase; display:block; margin-bottom:3px; }
+.cand-card-field span { font-size:13px; font-weight:600; color:rgba(255,255,255,0.95); }
+
+.total-banner {
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--dw-orange);
+  padding:20px 24px; margin-bottom:20px;
+}
+.total-lbl { font-size:11px; font-weight:700; color:var(--text3); letter-spacing:2px; text-transform:uppercase; }
+.total-nums { display:flex; align-items:baseline; gap:4px; margin-top:4px; }
+.total-score { font-family:'Bebas Neue',sans-serif; font-size:52px; line-height:1; color:var(--dw-orange); }
+.total-denom { font-size:16px; color:var(--text3); }
+.grade-badge {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:64px; height:64px; font-family:'Bebas Neue',sans-serif; font-size:36px; border-radius:2px;
+}
+.grade-S { background:var(--s-color); color:#fff; }
+.grade-A { background:var(--a-color); color:#fff; }
+.grade-Bplus { background:var(--bplus-color); color:#fff; }
+.grade-B { background:var(--b-color); color:#fff; }
+.grade-C { background:var(--c-color); color:#fff; }
+.grade-none { background:var(--surface3); color:var(--text3); font-size:24px; }
+.grade-desc { font-size:11px; color:var(--text3); margin-top:6px; letter-spacing:1px; text-align:right; }
+
+.section-header { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.section-tag { font-size:10px; font-weight:800; letter-spacing:2px; padding:4px 10px; background:var(--dw-orange); color:#fff; text-transform:uppercase; border-radius:1px; }
+.section-line { flex:1; height:1px; background:var(--border); }
+.section-title { font-size:13px; font-weight:700; color:var(--text2); }
+
+/* CRITERIA */
+.criteria-list { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
+.criteria-item { background:var(--surface); border:1px solid var(--border); padding:20px 24px; transition:border-color 0.2s, box-shadow 0.2s; border-radius:2px; }
+.criteria-item:hover { border-color:var(--dw-orange); box-shadow:0 2px 12px rgba(232,119,34,0.1); }
+.criteria-num { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--dw-orange); margin-bottom:8px; }
+.criteria-q-ko { font-size:13px; font-weight:600; color:var(--text); line-height:1.6; margin-bottom:4px; }
+.criteria-q-en { font-size:12px; color:var(--text3); line-height:1.5; font-style:italic; margin-bottom:16px; }
+.score-row { display:flex; align-items:center; gap:16px; }
+.score-input-wrap { display:flex; align-items:center; gap:6px; }
+.score-direct-input {
+  width:68px; text-align:center; font-family:'Bebas Neue',sans-serif;
+  font-size:38px; line-height:1; color:var(--dw-orange); background:none;
+  border:none; border-bottom:2px solid var(--border); outline:none;
+  cursor:text; padding:2px 4px; transition:border-color 0.2s;
+  -moz-appearance:textfield;
+}
+.score-direct-input::-webkit-outer-spin-button,
+.score-direct-input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+.score-direct-input:focus { border-bottom-color:var(--dw-orange); }
+.score-max-badge { font-size:11px; color:var(--text4); font-weight:600; align-self:flex-end; padding-bottom:6px; }
+.score-dots { display:flex; gap:4px; flex-wrap:wrap; flex:1; }
+.score-dot {
+  width:24px; height:24px; border:1.5px solid var(--border); background:var(--surface2);
+  cursor:pointer; transition:all 0.12s; display:flex; align-items:center; justify-content:center;
+  font-size:9px; font-weight:700; color:var(--text4); border-radius:2px;
+}
+.score-dot:hover { border-color:var(--dw-orange); color:var(--dw-orange); background:var(--surface3); }
+.score-dot.active { background:var(--dw-orange); border-color:var(--dw-orange); color:#fff; }
+.score-bar-wrap { margin-top:10px; }
+.score-bar-bg { height:3px; background:var(--surface3); }
+.score-bar-fg { height:3px; background:var(--dw-orange); transition:width 0.3s ease; }
+
+/* TEXT AREAS */
+.text-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+.text-card { background:var(--surface); border:1px solid var(--border); padding:18px 20px; border-radius:2px; }
+.text-card-label { font-size:11px; font-weight:800; color:var(--text2); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+.text-card-label-en { font-size:10px; color:var(--text4); font-weight:400; margin-bottom:10px; font-style:italic; line-height:1.4; }
+.label-good { color:var(--green); }
+.label-improve { color:var(--dw-orange); }
+.eval-textarea {
+  width:100%; min-height:110px; padding:12px; border:1px solid var(--border);
+  background:var(--surface2); color:var(--text); font-size:13px;
+  resize:vertical; outline:none; font-family:inherit; line-height:1.6; transition:border 0.2s; border-radius:2px;
+}
+.eval-textarea:focus { border-color:var(--accent); background:var(--surface); }
+.eval-textarea::placeholder { color:var(--text4); }
+
+/* SAVE SECTION */
+.save-section { background:var(--surface); border:1px solid var(--border); padding:20px 24px; margin-bottom:4px; }
+
+/* HISTORY PANEL */
+.hist-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.hist-toggle { padding:4px 12px; background:none; border:1px solid var(--border); font-size:11px; cursor:pointer; font-family:inherit; color:var(--text3); border-radius:2px; }
+
+/* ADMIN NAV */
+.admin-nav { display:flex; gap:2px; padding:0 32px; background:var(--surface); border-bottom:2px solid var(--border); flex-shrink:0; }
+.admin-nav-btn { padding:14px 20px; background:none; border:none; border-bottom:2px solid transparent; cursor:pointer; font-size:13px; font-weight:600; color:var(--text3); font-family:inherit; transition:all 0.2s; margin-bottom:-2px; }
+.admin-nav-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
+
+/* STAT CARDS */
+.stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px; }
+.stat-card { background:var(--surface); border:1px solid var(--border); padding:20px; border-top:3px solid transparent; border-radius:2px; }
+.stat-card.c1 { border-top-color:var(--dw-orange); } .stat-card.c1 .stat-val { color:var(--dw-orange); }
+.stat-card.c2 { border-top-color:var(--green); }     .stat-card.c2 .stat-val { color:var(--green); }
+.stat-card.c3 { border-top-color:var(--a-color); }   .stat-card.c3 .stat-val { color:var(--a-color); }
+.stat-card.c4 { border-top-color:var(--s-color); }   .stat-card.c4 .stat-val { color:var(--s-color); }
+.stat-icon { font-size:22px; margin-bottom:10px; }
+.stat-val { font-family:'Bebas Neue',sans-serif; font-size:38px; line-height:1; }
+.stat-lbl { font-size:11px; color:var(--text3); margin-top:3px; }
+
+/* TABLE */
+.table-card { background:var(--surface); border:1px solid var(--border); overflow:hidden; margin-bottom:24px; border-radius:2px; }
+.table-toolbar { padding:14px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.table-title { font-size:14px; font-weight:700; color:var(--text); }
+.filter-sel { padding:7px 12px; border:1px solid var(--border); background:var(--surface2); color:var(--text); font-size:12px; outline:none; cursor:pointer; font-family:inherit; border-radius:2px; }
+.tbl { width:100%; border-collapse:collapse; }
+.tbl thead th { padding:10px 16px; text-align:left; font-size:10px; font-weight:800; color:var(--text3); letter-spacing:1.5px; text-transform:uppercase; border-bottom:2px solid var(--border); background:var(--surface2); }
+.tbl tbody tr { border-bottom:1px solid var(--border); transition:background 0.15s; }
+.tbl tbody tr:hover { background:var(--surface2); cursor:pointer; }
+.tbl tbody tr:last-child { border-bottom:none; }
+.tbl td { padding:12px 16px; font-size:13px; vertical-align:middle; }
+.td-name { font-weight:700; font-size:14px; color:var(--text); }
+.td-id { font-size:11px; color:var(--text3); font-family:'Bebas Neue',sans-serif; letter-spacing:1px; }
+.dept-tag { display:inline-block; padding:3px 8px; background:var(--surface2); border:1px solid var(--border); font-size:11px; color:var(--text2); border-radius:2px; }
+.score-cell { display:flex; align-items:center; gap:8px; }
+.mini-bar { flex:1; height:4px; background:var(--surface3); border-radius:100px; overflow:hidden; }
+.mini-bar-fill { height:100%; background:var(--dw-orange); border-radius:100px; }
+.score-txt { font-size:12px; font-weight:700; color:var(--dw-orange); width:40px; }
+
+/* SETTINGS */
+.settings-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.settings-card { background:var(--surface); border:1px solid var(--border); padding:24px; border-radius:2px; }
+.settings-card-title { font-size:13px; font-weight:800; margin-bottom:18px; display:flex; align-items:center; gap:8px; color:var(--text); }
+.settings-card-title::before { content:''; width:3px; height:16px; background:var(--dw-orange); display:block; border-radius:2px; }
+.save-settings { width:100%; padding:12px; background:var(--dw-orange); color:#fff; border:none; font-size:13px; font-weight:700; cursor:pointer; font-family:inherit; letter-spacing:1px; transition:all 0.2s; margin-top:14px; border-radius:2px; }
+.save-settings:hover { background:var(--accent-dk); }
+.add-btn { padding:7px 14px; background:var(--dw-orange); color:#fff; border:none; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; transition:all 0.2s; border-radius:2px; }
+.add-btn:hover { background:var(--accent-dk); }
+
+/* GROUP MANAGER */
+.group-item { border:1px solid var(--border); padding:14px; margin-bottom:10px; background:var(--surface2); border-radius:2px; }
+.group-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.group-name-input { font-size:13px; font-weight:700; background:none; border:none; outline:none; color:var(--text); font-family:inherit; flex:1; }
+.group-del { background:none; border:none; color:var(--text3); cursor:pointer; font-size:14px; padding:2px 6px; }
+.group-del:hover { color:var(--red); }
+.group-members { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+.member-chip { padding:4px 10px; background:var(--surface3); border:1px solid var(--border); font-size:11px; display:flex; align-items:center; gap:4px; border-radius:2px; }
+.chip-del { background:none; border:none; cursor:pointer; color:var(--text3); font-size:12px; line-height:1; }
+.chip-del:hover { color:var(--red); }
+.add-input-row { display:flex; gap:6px; }
+.add-input { flex:1; padding:7px 10px; border:1px solid var(--border); background:var(--surface); font-size:12px; outline:none; font-family:inherit; color:var(--text); border-radius:2px; }
+.add-input:focus { border-color:var(--accent); }
+.col-map-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.col-map-label { font-size:12px; font-weight:600; color:var(--text2); width:90px; flex-shrink:0; }
+.col-map-sel { flex:1; padding:7px 10px; border:1px solid var(--border); background:var(--surface2); font-size:12px; outline:none; font-family:inherit; color:var(--text); border-radius:2px; }
+.preview-table { width:100%; border-collapse:collapse; font-size:12px; }
+.preview-table th { padding:8px 10px; background:var(--surface2); border:1px solid var(--border); font-size:10px; font-weight:800; color:var(--text3); letter-spacing:1px; text-transform:uppercase; }
+.preview-table td { padding:8px 10px; border:1px solid var(--border); color:var(--text2); }
+.import-result-row { display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:4px; margin-bottom:4px; font-size:12px; }
+.import-ok { background:#e8f5ef; color:var(--green); }
+.import-skip { background:#fef0e8; color:var(--dw-orange); }
+.import-err { background:#fde8e8; color:var(--red); }
+.status-dot { width:8px; height:8px; border-radius:50%; background:var(--text4); }
+.status-dot.ok { background:var(--green); }
+
+/* MODAL */
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(43,26,10,0.55); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center; }
+.modal-overlay.open { display:flex; }
+.modal { background:var(--surface); border:1px solid var(--border); border-top:4px solid var(--dw-orange); padding:32px; width:100%; max-width:560px; max-height:85vh; overflow-y:auto; position:relative; box-shadow:var(--shadow-lg); border-radius:2px; }
+.modal-close { position:absolute; top:16px; right:16px; background:var(--surface2); border:1px solid var(--border); width:30px; height:30px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; color:var(--text2); border-radius:2px; }
+.modal-name { font-size:22px; font-weight:800; margin-bottom:4px; }
+.modal-sub { font-size:12px; color:var(--text3); margin-bottom:16px; }
+
+/* TOAST */
+.toast { position:fixed; bottom:24px; right:24px; z-index:5000; background:var(--text); color:#fff; padding:12px 20px; display:flex; align-items:center; gap:10px; font-size:13px; box-shadow:var(--shadow-lg); transform:translateY(80px); opacity:0; transition:all 0.3s; border-left:4px solid var(--dw-orange); border-radius:2px; }
+.toast.show { transform:translateY(0); opacity:1; }
+
+/* EMPTY */
+.empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 20px; color:var(--text3); text-align:center; }
+.empty-icon { font-size:36px; margin-bottom:12px; opacity:0.5; }
+.empty-txt { font-size:13px; line-height:2; }
+
+/* GRADE ROW */
+.grade-row { display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid var(--border); }
+.grade-row:last-child { border-bottom:none; }
+.grade-row-lbl { width:30px; font-family:'Bebas Neue',sans-serif; font-size:18px; }
+.grade-row-bar { flex:1; height:8px; background:var(--surface3); border-radius:100px; overflow:hidden; }
+.grade-row-fill { height:100%; border-radius:100px; transition:width 0.8s ease; }
+.grade-row-cnt { font-size:12px; font-weight:700; color:var(--text2); width:40px; text-align:right; }
+
+::-webkit-scrollbar { width:5px; } ::-webkit-scrollbar-track { background:transparent; } ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:100px; }
+.d-none { display:none !important; }
+
+/* CMGR TABS */
+.cmgr-tab { padding:10px 18px; background:none; border:none; border-bottom:2px solid transparent; cursor:pointer; font-size:13px; font-weight:600; color:var(--text3); font-family:inherit; margin-bottom:-2px; transition:all 0.2s; }
+.cmgr-tab:hover { color:var(--text2); }
+.cmgr-tab.cmgr-active { color:var(--accent); border-bottom-color:var(--accent); }
+</style>
+</head>
+<body>
+<div id="sync-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#E87722;color:#fff;font-size:12px;font-weight:700;text-align:center;padding:8px;transition:background .3s;"></div>
+
+<!-- SPLASH -->
+<div id="splash" class="screen active">
+  <div class="splash-grid"></div>
+  <div class="splash-deco">DW</div>
+  <div class="splash-inner">
+    <div class="splash-tag">Peer Evaluation · 피어그룹 평가</div>
+    <div class="splash-h">과제발표<br><span>피어그룹 평가</span></div>
+    <div class="splash-en">Peer Evaluation for Project Presentation</div>
+    <div class="splash-brand">Daewoong</div>
+    <button class="splash-btn" onclick="go('login')">평가 시작하기 · Start →</button>
+    <div class="splash-contact">
+      시스템 오류 시 담당자에게 문의 바랍니다<br>
+      <span style="color:var(--text4)">For system errors, please contact the person in charge.</span>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="screen">
+  <div class="login-wrap">
+    <button class="login-back" onclick="go('splash')">← 뒤로 · Back</button>
+    <div class="login-card">
+      <div class="login-logo-text">대웅 피어그룹 평가 시스템<br><span style="font-size:12px;font-weight:400;color:var(--text3)">Daewoong Peer Evaluation System</span></div>
+      <div class="login-h">로그인 · <span style="font-size:20px;font-weight:600;color:var(--text2)">Login</span></div>
+      <div class="login-desc">
+        사번과 비밀번호를 입력하여 접속하세요<br>
+        <span style="font-size:12px;color:var(--text4)">Enter your Employee Number and password to access the system.</span>
+      </div>
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('reviewer')">평가자 · Evaluator</button>
+        <button class="tab-btn" onclick="switchTab('admin')">관리자</button>
+      </div>
+      <div id="pane-reviewer">
+        <div class="form-group">
+          <label class="form-label">사번 · Employee Number</label>
+          <input class="form-input" id="rv-id" placeholder="사번 입력 · Enter Employee Number" maxlength="7" type="text">
+        </div>
+        <div class="form-group">
+          <label class="form-label">비밀번호 · Password</label>
+          <input class="form-input" id="rv-pw" placeholder="비밀번호 · Password" type="password">
+        </div>
+        <button class="login-submit" onclick="loginReviewer()">평가 시스템 입장 · Enter</button>
+      </div>
+      <div id="pane-admin" class="d-none">
+        <div class="form-group">
+          <label class="form-label">관리자 ID</label>
+          <input class="form-input" id="ad-id" placeholder="관리자 ID" type="text">
+        </div>
+        <div class="form-group">
+          <label class="form-label">비밀번호</label>
+          <input class="form-input" id="ad-pw" placeholder="비밀번호" type="password">
+        </div>
+        <button class="login-submit" onclick="loginAdmin()">관리자 페이지 입장</button>
+      </div>
+      <div class="login-err" id="login-err">
+        ⚠ 사번 또는 비밀번호가 올바르지 않습니다<br>
+        <span style="font-size:11px;font-weight:400">Invalid Employee Number or password.</span>
+      </div>
+      <div style="margin-top:20px;font-size:12px;color:var(--text4);text-align:center;line-height:2">
+        시스템 오류 시 담당자에게 문의 바랍니다<br>
+        For system errors, please contact the person in charge.
+      </div>
+      <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:14px">
+        <button onclick="runDiagnostic()" style="width:100%;padding:9px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text3);cursor:pointer;font-family:inherit">🔍 연결 진단 · Diagnostic</button>
+        <div id="diag-result" style="margin-top:10px;font-size:11px;color:var(--text2);line-height:2;display:none;background:var(--surface2);padding:10px;border:1px solid var(--border)"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWER SCREEN -->
+<div id="reviewer" class="screen">
+  <div class="app-layout">
+    <div class="sidebar">
+      <div class="sidebar-top">
+        <div class="sidebar-logo">대웅 · Peer Eval</div>
+        <div class="sidebar-prog" id="rv-prog-txt">0 / 0</div>
+      </div>
+      <div class="user-block">
+        <div class="user-av" id="rv-av">?</div>
+        <div>
+          <div class="user-name" id="rv-uname">-</div>
+          <div class="user-role" id="rv-uid-disp">사번 · Evaluator</div>
+        </div>
+      </div>
+      <div class="sidebar-tabs">
+        <button class="sidebar-tab-btn active" onclick="rvTab('eval')">📋 평가 · Eval</button>
+        <button class="sidebar-tab-btn" onclick="rvTab('dash')">📊 현황 · Status</button>
+      </div>
+      <div class="search-wrap" id="rv-search-wrap">
+        <input class="sidebar-search" placeholder="🔍 이름 검색 · Search name" oninput="filterCands(this.value)" id="rv-search">
+      </div>
+      <div class="cand-list" id="cand-list"></div>
+      <div class="sidebar-foot">
+        <button id="sidebar-final-btn" class="foot-btn orange" onclick="confirmFinalSubmitAll()" style="display:none">✅ 최종 제출 · Final Submit</button>
+        <button class="foot-btn red" onclick="logout()">로그아웃 · Logout</button>
+      </div>
+    </div>
+    <div class="main-area">
+      <div class="main-header">
+        <div>
+          <div class="main-title" id="rv-main-title">평가 대상자를 선택하세요 · Select Evaluee</div>
+          <div class="main-sub" id="rv-main-sub">좌측 목록에서 평가할 동료를 선택하세요 · Select a peer from the list on the left</div>
+        </div>
+        <div class="autosave-ind" id="autosave-ind" style="display:none">
+          <div class="autosave-dot" id="autosave-dot"></div>
+          <span id="autosave-txt">Auto-saving</span>
+        </div>
+      </div>
+      <div class="main-body" id="rv-body">
+        <div class="empty-state">
+          <div class="empty-icon">📋</div>
+          <div class="empty-txt">좌측 목록에서 평가할 동료를 선택해 주세요<br><span style="font-size:12px;color:var(--text4)">Select a peer from the list on the left.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN SCREEN -->
+<div id="adminScreen" class="screen">
+  <div class="main-header" style="border-bottom:1px solid var(--border);background:var(--surface);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+    <div>
+      <div class="main-title">관리자 대시보드</div>
+      <div class="main-sub">대웅 과제발표 피어그룹 평가 시스템</div>
+    </div>
+    <button class="foot-btn red" style="width:auto;padding:6px 10px;background:rgba(200,65,10,0.1);color:var(--red);border:1px solid rgba(200,65,10,0.2);font-size:11px;" onclick="logout()">로그아웃</button>
+  </div>
+  <div class="admin-nav">
+    <button class="admin-nav-btn active" onclick="adminGo('dashboard')">📊 대시보드</button>
+    <button class="admin-nav-btn" onclick="adminGo('list')">📋 인원 목록</button>
+    <button class="admin-nav-btn" onclick="adminGo('candidates')">✏️ 대상자 관리</button>
+    <button class="admin-nav-btn" onclick="adminGo('reviewers')">👤 평가자 관리</button>
+    <button class="admin-nav-btn" onclick="adminGo('groups')">👥 그룹 매핑</button>
+    <button class="admin-nav-btn" onclick="adminGo('sheets')">🔗 Google Sheets</button>
+  </div>
+  <div class="main-body" id="admin-body"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+<div class="toast" id="toast"><span id="toast-msg"></span></div>
+
+<script>
+/* ══════════════════════════════════════
+   DATA
+══════════════════════════════════════ */
+// 평가자 — 관리자 화면에서 관리 가능
+// 형식: '사번': { pw, name, ojt1(1차OJT), ojt2(2차OJT) }
+// 평가자 — 구글 시트에서 실시간 동기화
+let REVIEWERS = {};
+
+// 평가 대상자 — 구글 시트에서 실시간 동기화
+let CANDIDATES = [];
+
+// 평가 항목 (3개, 각 10점, 총 30점)
+const CRITERIA = [
+  {
+    key:'q1', num:'Q1', max:10,
+    ko:'프로젝트의 내용은 목적과 목표가 명확하며 타당하게 구성되어 있는가?',
+    en:'Is the content of the project reasonable, with a clear purpose and objective?'
+  },
+  {
+    key:'q2', num:'Q2', max:10,
+    ko:'발표자는 해당 업무/프로젝트에 대해 충분한 이해도를 보여주었는가?',
+    en:'Does the presenter demonstrate a sufficient understanding of the work/project?'
+  },
+  {
+    key:'q3', num:'Q3', max:10,
+    ko:'프로젝트의 일정과 추진 전략이 명확하고 구체적으로 수립되어 있는가?',
+    en:'Is the project timeline and strategy clearly and specifically established?'
+  },
+];
+const TOTAL_MAX = CRITERIA.reduce((s,c)=>s+c.max, 0); // 30
+
+// 등급 기준 (30점 만점 기준)
+function getGrade(total) {
+  const pct = total / TOTAL_MAX * 100;
+  if (pct >= 95) return 'S';
+  if (pct >= 90) return 'A';
+  if (pct >= 85) return 'B+';
+  if (pct >= 80) return 'B';
+  return 'C';
+}
+function gradeClass(g) { return {S:'grade-S',A:'grade-A','B+':'grade-Bplus',B:'grade-B',C:'grade-C'}[g]||'grade-none'; }
+
+// 그룹 매핑
+let GROUPS = {};
+
+// Sheets 설정
+let SHEETS_CONFIG = {
+  url:'https://docs.google.com/spreadsheets/d/15jVzw330ZMquPtvGrfMUF06tBpFzcISa7zg7UUpmP0A/edit?usp=sharing',
+  scriptUrl:'https://script.google.com/macros/s/AKfycbynRV8P3dsU4Cia89EypthRzpqoPg-Hty5GQB1l_3KDiVyxOZ7g82C8nt8-_ZU_LWMOJw/exec',
+  sheetName:'인턴목록',
+  connected:true,
+};
+
+/* ══ STATE ══ */
+let currentUser = null, currentRole = null;
+let selectedCandId = null, filteredCands = [];
+let adminView = 'dashboard', rvView = 'eval';
+let autosaveTimer = null, groupIdCounter = 1;
+let evalData = {}, evalHistory = {};
+
+/* ══ LOCALSTORAGE ══ */
+const LS = {
+  EVAL:'peer_eval_data_v1', GROUPS:'peer_eval_groups_v1',
+  SHEETS:'peer_eval_sheets_v1', CANDS:'peer_eval_cands_v1',
+  REVIEWERS:'peer_eval_reviewers_v1', HISTORY:'peer_eval_history_v1',
+};
+function saveToLS() {
+  try {
+    // evalData(점수)와 evalHistory만 저장
+    // GROUPS/CANDIDATES/REVIEWERS는 항상 시트에서 불러오므로 저장 안 함
+    localStorage.setItem(LS.EVAL, JSON.stringify(evalData));
+    localStorage.setItem(LS.HISTORY, JSON.stringify(evalHistory));
+    localStorage.setItem(LS.SHEETS, JSON.stringify({
+      scriptUrl: SHEETS_CONFIG.scriptUrl,
+      url: SHEETS_CONFIG.url,
+    }));
+  } catch(e){}
+}
+function loadFromLS() {
+  try {
+    // evalData(점수)와 evalHistory만 localStorage에서 복원
+    // GROUPS/CANDIDATES/REVIEWERS는 항상 구글 시트에서 실시간으로 불러옴
+    const d=localStorage.getItem(LS.EVAL); if(d) evalData=JSON.parse(d);
+    const hi=localStorage.getItem(LS.HISTORY); if(hi) evalHistory=JSON.parse(hi);
+    // SHEETS_CONFIG는 scriptUrl만 복원 (sheetName 보정 제거)
+    const s=localStorage.getItem(LS.SHEETS);
+    if(s) {
+      const parsed=JSON.parse(s);
+      if(parsed.scriptUrl) SHEETS_CONFIG.scriptUrl=parsed.scriptUrl;
+      if(parsed.url) SHEETS_CONFIG.url=parsed.url;
+    }
+  } catch(e){}
+}
+loadFromLS();
+// 이전 버전 localStorage 캐시 제거 (GROUPS/CANDIDATES/REVIEWERS는 항상 시트에서 불러옴)
+try {
+  localStorage.removeItem(LS.GROUPS);
+  localStorage.removeItem(LS.CANDS);
+  localStorage.removeItem(LS.REVIEWERS);
+} catch(e){}
+
+/* ══ GOOGLE SHEETS 실시간 동기화 ══
+   인원목록: A사번 B이름 C1차OJT D2차OJT E과제명 F그룹 G활성화(Y/N)
+   평가자목록: A사번 B이름 C부서(1차OJT) D부서(2차OJT) E비밀번호 F그룹 G활성화(Y/N)
+   → 인원목록 F열(그룹) = 평가자목록 F열(그룹) 일치 시 자동 매핑
+══ */
+function showBanner(msg, bg, dur) {
+  const b = document.getElementById('sync-banner');
+  if (!b) return;
+  b.textContent = msg;
+  b.style.background = bg || '#E87722';
+  b.style.display = 'block';
+  if (dur) setTimeout(() => { b.style.display = 'none'; }, dur);
+}
+
+async function fetchSheet(name) {
+  if (!SHEETS_CONFIG.scriptUrl) return [];
+  try {
+    const res = await fetch(SHEETS_CONFIG.scriptUrl + '?sheet=' + encodeURIComponent(name));
+    const json = await res.json();
+    return Array.isArray(json) && json.length > 1
+      ? json.slice(1).filter(r => r.some(c => String(c).trim()))
+      : [];
+  } catch(e) { return []; }
+}
+
+async function syncFromSheets(silent) {
+  if (!SHEETS_CONFIG.scriptUrl) return false;
+  try {
+    const [candRows, rvRows] = await Promise.all([
+      fetchSheet('인턴목록'),
+      fetchSheet('평가자목록'),
+    ]);
+
+    console.log('[SYNC] 인턴목록 rows:', candRows.length, candRows);
+    console.log('[SYNC] 평가자목록 rows:', rvRows.length, rvRows);
+
+    // 인원목록: A사번 B이름 C1차OJT D2차OJT E과제명 F그룹 G활성화(Y/N)
+    if (candRows.length) {
+      const newCands = candRows.map(row => ({
+        id:      String(row[0]||'').trim(),
+        name:    String(row[1]||'').trim(),
+        ojt1:    String(row[2]||'').trim(),
+        ojt2:    String(row[3]||'').trim(),
+        project: String(row[4]||'').trim(),
+        group:   String(row[5]||'').trim(),
+        active:  String(row[6]||'Y').trim().toUpperCase() !== 'N',
+      })).filter(c => c.id && c.name);
+      CANDIDATES.splice(0, CANDIDATES.length, ...newCands);
+    }
+
+    // 평가자목록: A사번 B이름 C1차OJT D2차OJT E비밀번호 F그룹 G활성화(Y/N)
+    if (rvRows.length) {
+      Object.keys(REVIEWERS).forEach(k => delete REVIEWERS[k]);
+      rvRows.forEach(row => {
+        const id = String(row[0]||'').trim(); if (!id) return;
+        if (String(row[6]||'Y').trim().toUpperCase() === 'N') return; // 비활성 제외
+        REVIEWERS[id] = {
+          name:  String(row[1]||'').trim(),
+          ojt1:  String(row[2]||'').trim(),
+          ojt2:  String(row[3]||'').trim(),
+          pw:    String(row[4]||'').trim() || id,
+          group: String(row[5]||'').trim(), // F열 그룹
+        };
+      });
+    }
+
+    // GROUPS 재구성: 인원목록 F열 = 평가자목록 F열 그룹명 일치 시 매핑
+    Object.keys(GROUPS).forEach(k => delete GROUPS[k]);
+    const groupNames = [...new Set(
+      CANDIDATES.filter(c => c.active && c.group).map(c => c.group.trim())
+    )];
+    groupNames.forEach(gName => {
+      const gid = 'g_' + gName;
+      GROUPS[gid] = {
+        name: gName,
+        active: true,
+        reviewers: Object.entries(REVIEWERS)
+          .filter(([,rv]) => rv.group && rv.group.trim() === gName)
+          .map(([id]) => id),
+        candidates: CANDIDATES
+          .filter(c => c.active && c.group && c.group.trim() === gName)
+          .map(c => c.id),
+      };
+    });
+
+    console.log('[SYNC] 최종 CANDIDATES:', CANDIDATES.length, CANDIDATES.map(c=>c.name+'/'+c.group+'/active:'+c.active));
+    console.log('[SYNC] 최종 REVIEWERS:', Object.keys(REVIEWERS).length, Object.entries(REVIEWERS).map(([id,r])=>id+'/'+r.name+'/group:'+r.group));
+    console.log('[SYNC] 최종 GROUPS:', JSON.stringify(GROUPS, null, 2));
+
+    saveToLS();
+    if (!silent) showToast('✅ 동기화 완료');
+    return true;
+  } catch(e) {
+    if (!silent) showToast('⚠ 동기화 실패');
+    return false;
+  }
+}
+
+// 다른 기기 로그인 시 임시저장 시트에서 본인 데이터 복원
+async function restoreDraftFromSheet(rvId) {
+  if (!SHEETS_CONFIG.scriptUrl) return;
+  try {
+    const rows = await fetchSheet('임시저장');
+    if (!rows.length) return;
+    // row 구조: [0]rv사번 [1]rv명 [2]ojt1 [3]ojt2
+    //           [4]cand사번 [5]cand명 [6]ojt1 [7]ojt2 [8]과제명
+    //           [9]q1 [10]q2 [11]q3 [12]총점 [13]등급
+    //           [14]잘한점 [15]개선점 [16]시각 [17]상태
+    rows.forEach(row => {
+      if (String(row[0]||'').trim() !== String(rvId).trim()) return;
+      const candId = String(row[4]||'').trim(); if (!candId) return;
+      const k = getEvalKey(rvId, candId);
+      if (evalData[k]?.finalSubmitted) return;
+      evalData[k] = {
+        scores: {
+          q1: Number(row[9]||0),
+          q2: Number(row[10]||0),
+          q3: Number(row[11]||0),
+        },
+        good:           String(row[14]||''),
+        improve:        String(row[15]||''),
+        drafted:        true,
+        finalSubmitted: false,
+        submittedAt:    '',
+      };
+    });
+    saveToLS();
+  } catch(e) { console.warn('임시저장 복원 실패:', e); }
+}
+
+// 앱 시작 시 자동 동기화
+window.addEventListener('load', async function() {
+  if (!SHEETS_CONFIG.scriptUrl) return;
+  showBanner('⏳ 데이터 불러오는 중... · Syncing...', '#E87722');
+  const ok = await syncFromSheets(true);
+  showBanner(
+    ok ? '✅ 동기화 완료 · Sync Complete' : '⚠ 동기화 실패 · Sync Failed',
+    ok ? '#2A7D4F' : '#C8410A', 2000
+  );
+  // 30초마다 백그라운드 갱신
+  setInterval(async () => {
+    await syncFromSheets(true);
+    if (currentUser && currentRole === 'reviewer') myCandidates();
+  }, 30000);
+});
+function go(id) { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function getEvalKey(rvId,candId) { return `${rvId}:${candId}`; }
+function getEval(rvId,candId) {
+  const k=getEvalKey(rvId,candId);
+  if(!evalData[k]) { evalData[k]={scores:{},good:'',improve:'',drafted:false,finalSubmitted:false,submittedAt:''}; CRITERIA.forEach(c=>{evalData[k].scores[c.key]=0;}); }
+  return evalData[k];
+}
+function calcTotal(ev) { return CRITERIA.reduce((s,c)=>s+(ev.scores[c.key]||0),0); }
+function showToast(msg,dur=2800) { const t=document.getElementById('toast'); document.getElementById('toast-msg').textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),dur); }
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click',e=>{ if(e.target===document.getElementById('modal')) closeModal(); });
+
+/* ══ LOGIN ══ */
+// 연결 진단 함수
+async function runDiagnostic() {
+  const el = document.getElementById('diag-result');
+  el.style.display = 'block';
+  el.innerHTML = '⏳ 진단 중...';
+  let html = '';
+
+  html += `📌 Script URL: ${SHEETS_CONFIG.scriptUrl ? '✅ 설정됨' : '❌ 없음'}<br>`;
+  if (!SHEETS_CONFIG.scriptUrl) { el.innerHTML = html; return; }
+
+  try {
+    const rows = await fetchSheet('인턴목록');
+    html += `👥 인턴목록: ${rows.length}행 ${rows.length > 0 ? '✅' : '❌ 데이터없음'}<br>`;
+    if (rows.length > 0) html += `&nbsp;&nbsp;→ ${rows[0][1]} / 그룹:"${rows[0][5]}" / 활성화:"${rows[0][6]}"<br>`;
+  } catch(e) { html += `👥 인턴목록 오류: ${e.message}<br>`; }
+
+  try {
+    const rows = await fetchSheet('평가자목록');
+    html += `👤 평가자목록: ${rows.length}행 ${rows.length > 0 ? '✅' : '❌ 데이터없음'}<br>`;
+    if (rows.length > 0) html += `&nbsp;&nbsp;→ ${rows[0][1]} / 그룹:"${rows[0][5]}" / 활성화:"${rows[0][6]}"<br>`;
+  } catch(e) { html += `👤 평가자목록 오류: ${e.message}<br>`; }
+
+  html += `<br>📊 현재 메모리:<br>`;
+  html += `&nbsp;&nbsp;CANDIDATES: ${CANDIDATES.length}명<br>`;
+  html += `&nbsp;&nbsp;REVIEWERS: ${Object.keys(REVIEWERS).length}명<br>`;
+  html += `&nbsp;&nbsp;GROUPS: ${Object.keys(GROUPS).length}개<br>`;
+  Object.entries(GROUPS).forEach(([,g]) => {
+    html += `&nbsp;&nbsp;&nbsp;&nbsp;[${g.name}] 평가자:${g.reviewers.length} / 인턴:${g.candidates.length}<br>`;
+  });
+  el.innerHTML = html;
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&tab==='reviewer')||(i===1&&tab==='admin')));
+  document.getElementById('pane-reviewer').classList.toggle('d-none',tab!=='reviewer');
+  document.getElementById('pane-admin').classList.toggle('d-none',tab!=='admin');
+  document.getElementById('login-err').style.display='none';
+}
+function loginReviewer() {
+  const id = document.getElementById('rv-id').value.trim();
+  const pw = document.getElementById('rv-pw').value;
+
+  async function doLogin() {
+    if (SHEETS_CONFIG.scriptUrl) {
+      showBanner('⏳ 최신 데이터 확인 중...', '#E87722');
+      await syncFromSheets(true);
+      showBanner('', '', 1);
+    }
+    if (REVIEWERS[id] && REVIEWERS[id].pw === pw) {
+      currentUser = { ...REVIEWERS[id], id };
+      currentRole = 'reviewer';
+      document.getElementById('rv-av').textContent = currentUser.name[0];
+      document.getElementById('rv-uname').textContent = currentUser.name;
+      document.getElementById('rv-uid-disp').textContent = id + ' · Evaluator';
+      // 다른 기기 접속 시 임시저장 복원
+      if (SHEETS_CONFIG.scriptUrl) {
+        showBanner('⏳ 이전 평가 데이터 복원 중...', '#E87722');
+        await restoreDraftFromSheet(id);
+        showBanner('✅ 복원 완료', '#2A7D4F', 1500);
+      }
+      myCandidates(); rvTab('eval'); go('reviewer');
+    } else {
+      document.getElementById('login-err').style.display = 'block';
+    }
+  }
+  doLogin();
+}
+function loginAdmin() {
+  if (document.getElementById('ad-id').value.trim() === 'intern321' && document.getElementById('ad-pw').value === 'intern321') {
+    currentRole = 'admin'; adminGo('dashboard'); go('adminScreen');
+  } else { document.getElementById('login-err').style.display = 'block'; }
+}
+function logout() { currentUser=null; currentRole=null; selectedCandId=null; go('login'); }
+
+/* ══ REVIEWER — CANDIDATE LIST ══ */
+function myCandidates() {
+  const myIds=new Set();
+  Object.values(GROUPS).forEach(g=>{ if(g.active!==false&&g.reviewers.includes(currentUser.id)) g.candidates.forEach(cid=>myIds.add(cid)); });
+  filteredCands=CANDIDATES.filter(c=>myIds.has(c.id));
+  renderCandList(); updateRvProgress();
+}
+function filterCands(q) {
+  const myIds=new Set();
+  Object.values(GROUPS).forEach(g=>{ if(g.active!==false&&g.reviewers.includes(currentUser.id)) g.candidates.forEach(cid=>myIds.add(cid)); });
+  const base=CANDIDATES.filter(c=>myIds.has(c.id));
+  filteredCands=base.filter(c=>c.name.includes(q)||c.dept?.includes(q)||c.project?.includes(q));
+  renderCandList();
+}
+function renderCandList() {
+  const el=document.getElementById('cand-list');
+  if(!filteredCands.length) {
+    el.innerHTML=`<div class="empty-state" style="padding:30px 16px"><div class="empty-icon" style="font-size:28px">📋</div><div class="empty-txt" style="text-align:center;line-height:2">배정된 평가 대상자가 없습니다<br><span style="font-size:11px;color:rgba(255,255,255,0.3)">No evaluees assigned.<br>Please contact the administrator.</span></div></div>`;
+    updateSidebarFinalBtn(); return;
+  }
+  el.innerHTML=filteredCands.map(c=>{
+    const ev=getEval(currentUser.id,c.id);
+    const total=calcTotal(ev);
+    const hasScore=ev.drafted||ev.finalSubmitted;
+    const grade=hasScore?getGrade(total):null;
+    const active=selectedCandId===c.id;
+    const statusClass=ev.finalSubmitted?'badge-done':ev.drafted?'badge-draft':'badge-todo';
+    const statusLabel=ev.finalSubmitted?'✓ Submitted':ev.drafted?'✎ Saved':'Not Started';
+    return `<div class="cand-item${active?' active':''}" onclick="selectCand('${c.id}')">
+      <div class="cand-item-name">${c.name}</div>
+      <div class="cand-item-sub">${c.ojt1||c.dept||''}${c.ojt2?' → '+c.ojt2:c.project?' · '+c.project:''}</div>
+      <div class="cand-item-badges">
+        <span class="badge-status ${statusClass}">${statusLabel}</span>
+        ${hasScore?`<span class="badge-grade">${grade}</span><span class="badge-score">${total}pts</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  updateSidebarFinalBtn();
+}
+function updateRvProgress() {
+  if(!currentUser) return;
+  const myIds=filteredCands.map(c=>c.id);
+  const done=myIds.filter(id=>evalData[getEvalKey(currentUser.id,id)]?.finalSubmitted).length;
+  const drafted=myIds.filter(id=>{const ev=evalData[getEvalKey(currentUser.id,id)];return ev?.drafted&&!ev?.finalSubmitted;}).length;
+  document.getElementById('rv-prog-txt').textContent=`✅ ${done}/${myIds.length}${drafted>0?' · 💾'+drafted:''}`;
+  updateSidebarFinalBtn();
+}
+function updateSidebarFinalBtn() {
+  const btn=document.getElementById('sidebar-final-btn'); if(!btn||!currentUser) return;
+  const myIds=filteredCands.map(c=>c.id);
+  const pending=myIds.filter(id=>{const ev=evalData[getEvalKey(currentUser.id,id)];return ev?.drafted&&!ev?.finalSubmitted;});
+  const allDone=myIds.length>0&&myIds.every(id=>evalData[getEvalKey(currentUser.id,id)]?.finalSubmitted);
+  btn.onclick=confirmFinalSubmitAll; btn.style.cursor='pointer'; btn.style.background='var(--dw-orange)';
+  if(allDone) { btn.style.display='block'; btn.style.background='var(--green)'; btn.style.cursor='default'; btn.textContent='✅ All Submitted'; btn.onclick=null; }
+  else if(pending.length>0) { btn.style.display='block'; btn.textContent=`✅ 최종 제출 · Final Submit (${pending.length})`; }
+  else btn.style.display='none';
+}
+
+/* ══ REVIEWER TABS ══ */
+function rvTab(tab) {
+  rvView=tab;
+  document.querySelectorAll('.sidebar-tab-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&tab==='eval')||(i===1&&tab==='dash')));
+  if(tab==='dash') { document.getElementById('rv-search-wrap').style.display='none'; renderRvDashboard(); }
+  else {
+    document.getElementById('rv-search-wrap').style.display='';
+    if(selectedCandId) renderEvalForm();
+    else {
+      document.getElementById('rv-main-title').textContent='평가 대상자를 선택하세요 · Select Evaluee';
+      document.getElementById('rv-main-sub').textContent='좌측 목록에서 평가할 동료를 선택하세요 · Select a peer from the list on the left';
+      document.getElementById('autosave-ind').style.display='none';
+      document.getElementById('rv-body').innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-txt">좌측 목록에서 평가할 동료를 선택해 주세요<br><span style="font-size:12px;color:var(--text4)">Select a peer from the list on the left.</span></div></div>`;
+    }
+  }
+}
+
+/* ══ REVIEWER DASHBOARD ══ */
+function renderRvDashboard() {
+  document.getElementById('rv-main-title').textContent='My Evaluation Status · 내 평가 현황';
+  document.getElementById('rv-main-sub').textContent=currentUser.name+' · Evaluator';
+  document.getElementById('autosave-ind').style.display='none';
+  const myIds=filteredCands.map(c=>c.id);
+  const finalDone=myIds.filter(id=>evalData[getEvalKey(currentUser.id,id)]?.finalSubmitted);
+  const draftOnly=myIds.filter(id=>{const ev=evalData[getEvalKey(currentUser.id,id)];return ev?.drafted&&!ev?.finalSubmitted;});
+  const grades={S:0,A:0,'B+':0,B:0,C:0};
+  const allScores=[];
+  finalDone.forEach(id=>{const ev=evalData[getEvalKey(currentUser.id,id)];const t=calcTotal(ev);allScores.push(t);grades[getGrade(t)]++;});
+  const avg=allScores.length?Math.round(allScores.reduce((a,b)=>a+b,0)/allScores.length):'-';
+  const gradeColors={S:'#1a6b3a',A:'#1a4f6b','B+':'#4a3a8c',B:'#7a5c10',C:'#8c3a2a'};
+  document.getElementById('rv-body').innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+      <div class="stat-card c1"><div class="stat-icon">👥</div><div class="stat-val" style="color:var(--dw-orange)">${myIds.length}</div><div class="stat-lbl">전체 대상 · Total</div></div>
+      <div class="stat-card c2"><div class="stat-icon">✅</div><div class="stat-val" style="color:var(--green)">${finalDone.length}</div><div class="stat-lbl">최종제출 · Submitted</div></div>
+      <div class="stat-card c3"><div class="stat-icon">💾</div><div class="stat-val" style="color:var(--dw-orange)">${draftOnly.length}</div><div class="stat-lbl">임시저장 · Draft</div></div>
+    </div>
+    ${draftOnly.length>0?`<div style="padding:12px 16px;background:rgba(232,119,34,0.08);border:1px solid rgba(232,119,34,0.2);border-left:4px solid var(--dw-orange);margin-bottom:20px;font-size:13px;color:var(--text2)">⚠ <b>${draftOnly.length}</b> evaluation(s) are saved as draft. Click <b>✅ Final Submit</b> to submit.</div>`:''}
+    <div class="table-card"><table class="tbl">
+      <thead><tr><th>이름 · Name</th><th>1st OJT</th><th>2nd OJT</th><th>과제명 · Project</th><th>점수 · Score</th><th>등급 · Grade</th><th>상태 · Status</th></tr></thead>
+      <tbody>${filteredCands.map(c=>{
+        const ev=evalData[getEvalKey(currentUser.id,c.id)];
+        const isFinal=ev?.finalSubmitted; const isDraft=ev?.drafted&&!isFinal;
+        const t=(isFinal||isDraft)?calcTotal(ev):null; const gr=isFinal?getGrade(t):'-';
+        return `<tr onclick="selectCandAndEval('${c.id}')">
+          <td class="td-name">${c.name}</td>
+          <td><span class="dept-tag">${c.ojt1||c.dept||'-'}</span></td>
+          <td><span class="dept-tag">${c.ojt2||'-'}</span></td>
+          <td style="font-size:12px;color:var(--text2)">${c.project||'-'}</td>
+          <td>${t!==null?`<div class="score-cell"><div class="mini-bar"><div class="mini-bar-fill" style="width:${Math.round(t/TOTAL_MAX*100)}%"></div></div><span class="score-txt">${t}/${TOTAL_MAX}</span></div>`:'<span style="color:var(--text4)">-</span>'}</td>
+          <td>${isFinal?`<span style="font-family:Bebas Neue;font-size:16px;color:${gradeColors[gr]}">${gr}</span>`:'-'}</td>
+          <td><span class="badge-status ${isFinal?'badge-done':isDraft?'badge-draft':'badge-todo'}">${isFinal?'✓ Submitted':isDraft?'✎ Draft':'Not Started'}</span></td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table></div>
+    ${avg!=='-'?`<div style="margin-top:12px;text-align:right;font-size:13px;color:var(--text3)">Average Score · <b style="color:var(--dw-orange)">${avg} / ${TOTAL_MAX} pts</b></div>`:''}
+  `;
+}
+function selectCandAndEval(id) { selectedCandId=id; rvTab('eval'); renderCandList(); }
+
+/* ══ EVAL FORM ══ */
+function selectCand(id) { selectedCandId=id; rvView='eval'; document.getElementById('rv-search-wrap').style.display=''; renderCandList(); renderEvalForm(); }
+
+function renderEvalForm() {
+  const c=CANDIDATES.find(x=>x.id===selectedCandId); if(!c) return;
+  const ev=getEval(currentUser.id,c.id);
+  const total=calcTotal(ev);
+  const grade=getGrade(total);
+  document.getElementById('rv-main-title').textContent=c.name+' · Evaluation';
+  document.getElementById('rv-main-sub').textContent=c.project||c.dept||'';
+  document.getElementById('autosave-ind').style.display='flex';
+
+  document.getElementById('rv-body').innerHTML=`
+    <div class="cand-card">
+      <div class="cand-card-name">${c.name}</div>
+      <div class="cand-card-id">Employee Number: ${c.id}</div>
+      <div class="cand-card-grid">
+        <div class="cand-card-field"><label>1st OJT</label><span>${c.ojt1||c.dept||'-'}</span></div>
+        <div class="cand-card-field"><label>2nd OJT</label><span>${c.ojt2||'-'}</span></div>
+        <div class="cand-card-field"><label>과제명 · Project</label><span style="font-size:11px">${c.project||'-'}</span></div>
+      </div>
+    </div>
+    <div class="total-banner">
+      <div>
+        <div class="total-lbl">합계 · <span style="font-weight:400;font-size:10px">Total Score</span></div>
+        <div class="total-nums">
+          <span class="total-score" id="total-disp">${total}</span>
+          <span class="total-denom">/ ${TOTAL_MAX}점</span>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div class="grade-badge ${gradeClass(total===0?null:grade)}" id="grade-disp">${total===0?'-':grade}</div>
+        <div class="grade-desc" id="grade-desc-disp">${total===0?'점수 입력 후 등급 산출 · Enter scores':'종합평가등급 · Overall Rating'}</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <span class="section-tag">평가항목</span>
+      <span class="section-line"></span>
+      <span class="section-title">Evaluation Criteria · 각 항목 0~${CRITERIA[0].max}점</span>
+    </div>
+    <div class="criteria-list">
+      ${CRITERIA.map(cr=>renderCriteriaItem(cr,ev.scores[cr.key]||0)).join('')}
+    </div>
+
+    <div class="section-header">
+      <span class="section-tag">주관식</span>
+      <span class="section-line"></span>
+      <span class="section-title">Overall Comments · 종합 의견</span>
+    </div>
+    <div class="text-grid">
+      <div class="text-card">
+        <div class="text-card-label label-good">가장 인상깊었던 부분 및 잘한 점</div>
+        <div class="text-card-label-en">Most impressive aspects and strengths of the presentation</div>
+        <textarea class="eval-textarea" id="ta-good" placeholder="잘한 점을 작성해주세요 · Strengths">${ev.good||''}</textarea>
+      </div>
+      <div class="text-card">
+        <div class="text-card-label label-improve">발전을 위해 개선이 필요하다고 생각하는 부분</div>
+        <div class="text-card-label-en">Areas that need improvement for further development</div>
+        <textarea class="eval-textarea" id="ta-improve" placeholder="개선할 점을 작성해주세요 · Areas for Improvement">${ev.improve||''}</textarea>
+      </div>
+    </div>
+
+    <div class="save-section">
+      ${ev.finalSubmitted?`
+        <div style="padding:14px 18px;background:#e8f5ef;border:1px solid #b8dfc8;font-size:13px;color:var(--green);font-weight:700;display:flex;align-items:center;gap:10px;border-radius:2px">
+          ✅ 최종 제출 완료 · Final Submission Complete
+          <span style="font-size:12px;font-weight:400;color:#3a8a5a;margin-left:4px">${ev.submittedAt?new Date(ev.submittedAt).toLocaleString('ko'):''}</span>
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text4);text-align:center">최종 제출된 평가는 수정할 수 없습니다 · This evaluation cannot be modified.</div>
+      `:`
+        <button onclick="draftEval()" style="width:100%;padding:14px;border:2px solid var(--border);background:var(--surface2);color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.5px;transition:all 0.2s;border-radius:2px">
+          💾 임시저장 · Save Draft
+        </button>
+        <div style="margin-top:10px;font-size:11px;color:var(--text4);text-align:center;line-height:1.7">
+          입력 내용은 임시저장됩니다 · Content is saved as draft<br>
+          좌측 하단 <b>✅ Final Submit</b> 버튼으로 최종 제출하세요
+        </div>
+        ${ev.drafted?`<div style="margin-top:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--dw-orange);font-size:12px;color:var(--text3);border-radius:2px">
+          💾 임시저장됨 · Saved as Draft · ${ev.draftedAt?new Date(ev.draftedAt).toLocaleString('ko'):''}
+        </div>`:''}
+      `}
+    </div>
+  `;
+  document.getElementById('ta-good')?.addEventListener('input',triggerAutosave);
+  document.getElementById('ta-improve')?.addEventListener('input',triggerAutosave);
+}
+
+function renderCriteriaItem(cr,score) {
+  const pct=Math.round(score/cr.max*100);
+  const dots=Array.from({length:cr.max},(_,i)=>{
+    const v=i+1; const active=v<=score;
+    return `<div class="score-dot${active?' active':''}" onclick="setScoreDot('${cr.key}',${v},${cr.max})">${v}</div>`;
+  }).join('');
+  return `<div class="criteria-item">
+    <div class="criteria-num">${cr.num} · ${cr.max}점(pts)</div>
+    <div class="criteria-q-en">${cr.en}</div>
+    <div class="criteria-q-ko">${cr.ko}</div>
+    <div class="score-row">
+      <div class="score-input-wrap">
+        <input class="score-direct-input" id="sval-${cr.key}" type="number" min="0" max="${cr.max}" value="${score}"
+          oninput="onScoreInput('${cr.key}',${cr.max},this)" onblur="onScoreBlur('${cr.key}',${cr.max},this)">
+        <span class="score-max-badge">/ ${cr.max}</span>
+      </div>
+      <div class="score-dots" id="sdots-${cr.key}">${dots}</div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fg" id="sbar-${cr.key}" style="width:${pct}%"></div></div></div>
+  </div>`;
+}
+
+function setScoreDot(key,val,max) {
+  if(!selectedCandId||!currentUser) return;
+  const ev=getEval(currentUser.id,selectedCandId);
+  if(ev.finalSubmitted){showToast('This evaluation cannot be modified.');return;}
+  ev.scores[key]=ev.scores[key]===val?0:val;
+  updateScoreUI(key,ev.scores[key],max); triggerAutosave();
+}
+function onScoreInput(key,max,el) {
+  if(!selectedCandId||!currentUser) return;
+  const ev=getEval(currentUser.id,selectedCandId);
+  if(ev.finalSubmitted){el.value=ev.scores[key]||0;showToast('This evaluation cannot be modified.');return;}
+  let v=parseInt(el.value,10); if(isNaN(v)) return;
+  v=Math.max(0,Math.min(max,v)); ev.scores[key]=v; updateScoreUI(key,v,max); triggerAutosave();
+}
+function onScoreBlur(key,max,el) {
+  if(!selectedCandId||!currentUser) return;
+  const ev=getEval(currentUser.id,selectedCandId);
+  if(ev.finalSubmitted){el.value=ev.scores[key]||0;return;}
+  let v=parseInt(el.value,10); if(isNaN(v)||v<0) v=0; if(v>max) v=max;
+  el.value=v; ev.scores[key]=v; updateScoreUI(key,v,max);
+}
+function updateScoreUI(key,val,max) {
+  const inp=document.getElementById('sval-'+key); if(inp&&document.activeElement!==inp) inp.value=val;
+  const dotsEl=document.getElementById('sdots-'+key);
+  if(dotsEl) dotsEl.querySelectorAll('.score-dot').forEach((d,i)=>d.classList.toggle('active',i<val));
+  const sbar=document.getElementById('sbar-'+key); if(sbar) sbar.style.width=Math.round(val/max*100)+'%';
+  if(!selectedCandId||!currentUser) return;
+  const ev=getEval(currentUser.id,selectedCandId);
+  const total=calcTotal(ev); const grade=getGrade(total);
+  const td=document.getElementById('total-disp'); const gd=document.getElementById('grade-disp'); const gdd=document.getElementById('grade-desc-disp');
+  if(td) td.textContent=total;
+  if(gd){gd.textContent=grade;gd.className='grade-badge '+gradeClass(grade);}
+  if(gdd) gdd.textContent='종합평가등급 · Overall Rating';
+}
+
+function triggerAutosave() {
+  const dot=document.getElementById('autosave-dot'); const txt=document.getElementById('autosave-txt');
+  if(dot) dot.classList.remove('saved'); if(txt) txt.textContent='Saving...';
+  clearTimeout(autosaveTimer);
+  autosaveTimer=setTimeout(()=>{
+    autoSave();
+    if(dot) dot.classList.add('saved');
+    if(txt) txt.textContent='임시저장됨 · '+new Date().toLocaleTimeString('ko',{hour:'2-digit',minute:'2-digit'});
+  },800);
+}
+function autoSave() {
+  if(!selectedCandId||!currentUser) return;
+  const ev=getEval(currentUser.id,selectedCandId);
+  if(ev.finalSubmitted) return;
+  const g=document.getElementById('ta-good'); const im=document.getElementById('ta-improve');
+  if(g) ev.good=g.value; if(im) ev.improve=im.value;
+  saveToLS();
+  // 구글 시트 임시저장 (브라우저를 꺼도 시트에 남음)
+  const c=CANDIDATES.find(x=>x.id===selectedCandId);
+  if(c) draftToSheets(c, ev);
+}
+function draftEval() {
+  if(!selectedCandId||!currentUser) return;
+  const ev=getEval(currentUser.id,selectedCandId);
+  if(ev.finalSubmitted){showToast('This evaluation has already been submitted.');return;}
+  autoSave(); ev.drafted=true; ev.draftedAt=new Date().toISOString(); saveToLS();
+  renderCandList(); updateRvProgress();
+  const c=CANDIDATES.find(x=>x.id===selectedCandId);
+  showToast(`💾 ${c?.name} · 임시저장 완료 · Draft Saved`); renderEvalForm();
+}
+function confirmFinalSubmitAll() {
+  if(!currentUser) return;
+  const pending=filteredCands.map(c=>c.id).filter(id=>{const ev=evalData[getEvalKey(currentUser.id,id)];return ev?.drafted&&!ev?.finalSubmitted;});
+  if(!pending.length){showToast('No drafts to submit.');return;}
+  const names=pending.map(id=>CANDIDATES.find(c=>c.id===id)?.name).filter(Boolean).join(', ');
+  const ok=confirm(`【Final Submission · 최종 제출 확인】\n\n${pending.length}명의 평가를 최종 제출합니다:\n${names}\n\nOnce submitted, evaluations cannot be modified.\n최종 제출 후에는 수정할 수 없습니다.\n\nProceed? · 제출하시겠습니까?`);
+  if(!ok) return;
+  const myGroup=Object.values(GROUPS).find(g=>g.active!==false&&g.reviewers.includes(currentUser.id));
+  const groupName=myGroup?myGroup.name:'미지정';
+  pending.forEach(candId=>{
+    const ev=getEval(currentUser.id,candId);
+    const total=calcTotal(ev); const grade=getGrade(total);
+    ev.drafted=true; ev.submitted=true; ev.finalSubmitted=true; ev.submittedAt=new Date().toISOString();
+    evalHistory[`${groupName}||${candId}||${currentUser.id}`]={submitted:true,submittedAt:ev.submittedAt,total,grade,scores:{...ev.scores},good:ev.good||'',improve:ev.improve||''};
+    const cand=CANDIDATES.find(c=>c.id===candId); if(cand) syncToSheets(cand,ev);
+  });
+  saveToLS(); renderCandList(); updateRvProgress();
+  if(selectedCandId) renderEvalForm();
+  showToast(`✅ ${pending.length}명 최종 제출 완료 · Final submission complete`);
+}
+function submitEval() { /* 개별 제출 (confirmFinalSubmitAll로 처리) */ }
+
+/* ══ GOOGLE SHEETS PUSH (UPSERT) ══
+   임시저장: '임시저장' 시트에 upsert
+   최종제출: '평가결과' 시트에 upsert
+   컬럼: A평가자사번 B평가자명 C평가자1차OJT D평가자2차OJT
+         E대상자사번 F대상자명 G1차OJT H2차OJT I과제명
+         J공통1(Q1) K공통2(Q2) L학습(Q3) M총점 N잘한점 O개선점 P시각 Q저장상태
+══ */
+async function pushToSheet(sheetName, cand, ev, isFinal) {
+  if (!SHEETS_CONFIG.scriptUrl) return;
+  const rv = currentUser;
+  const total = calcTotal(ev);
+  const grade = getGrade(total);
+  const status = isFinal ? '최종제출' : '임시저장';
+  const timeVal = isFinal
+    ? (ev.submittedAt || new Date().toISOString())
+    : new Date().toISOString();
+  const row = [
+    rv.id, rv.name, rv.ojt1||'', rv.ojt2||'',
+    cand.id, cand.name, cand.ojt1||'', cand.ojt2||'', cand.project||'',
+    ev.scores.q1||0, ev.scores.q2||0, ev.scores.q3||0,
+    total, grade,
+    ev.good||'', ev.improve||'',
+    timeVal, status,
+  ];
+  try {
+    await fetch(SHEETS_CONFIG.scriptUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        type: 'eval_upsert',
+        sheet: sheetName,
+        rvId: rv.id,
+        candId: cand.id,
+        row,
+      }),
+    });
+  } catch(e) { console.warn('Sheets push 실패:', e); }
+}
+
+async function syncToSheets(cand, ev) {
+  // 최종제출 → '평가결과' 시트
+  await pushToSheet('평가결과', cand, ev, true);
+}
+
+async function draftToSheets(cand, ev) {
+  // 임시저장 → '임시저장' 시트
+  await pushToSheet('임시저장', cand, ev, false);
+}
+
+/* ══ ADMIN ══ */
+function adminGo(view) {
+  adminView=view;
+  document.querySelectorAll('.admin-nav-btn').forEach((b,i)=>b.classList.toggle('active',['dashboard','list','candidates','reviewers','groups','sheets'][i]===view));
+  ({dashboard:renderAdminDashboard,list:renderAdminList,candidates:renderAdminCandidates,reviewers:renderAdminReviewers,groups:renderAdminGroups,sheets:renderAdminSheets})[view]?.();
+}
+
+function renderAdminDashboard() {
+  const gradeColors={S:'#1a6b3a',A:'#1a4f6b','B+':'#4a3a8c',B:'#7a5c10',C:'#8c3a2a'};
+  const allEvals=[];
+  CANDIDATES.forEach(c=>Object.keys(REVIEWERS).forEach(rvId=>{const k=getEvalKey(rvId,c.id);if(evalData[k]?.finalSubmitted)allEvals.push({cand:c,ev:evalData[k],rvId});}));
+  const totalCands=CANDIDATES.length;
+  const submittedCands=new Set(allEvals.map(e=>e.cand.id)).size;
+  const draftedCands=CANDIDATES.filter(c=>Object.keys(REVIEWERS).map(rvId=>evalData[getEvalKey(rvId,c.id)]).some(e=>e?.drafted&&!e?.finalSubmitted)).length;
+  const grades={S:0,A:0,'B+':0,B:0,C:0};
+  allEvals.forEach(e=>grades[getGrade(calcTotal(e.ev))]++);
+  const scores=allEvals.map(e=>calcTotal(e.ev));
+  const avg=scores.length?Math.round(scores.reduce((a,b)=>a+b,0)/scores.length):'-';
+
+  document.getElementById('admin-body').innerHTML=`
+    <div class="stat-grid">
+      <div class="stat-card c1"><div class="stat-icon">👥</div><div class="stat-val">${totalCands}</div><div class="stat-lbl">전체 등록 인원</div></div>
+      <div class="stat-card c2"><div class="stat-icon">✅</div><div class="stat-val">${submittedCands}</div><div class="stat-lbl">최종제출 완료</div></div>
+      <div class="stat-card" style="border-top:3px solid var(--dw-orange)"><div class="stat-icon">💾</div><div class="stat-val" style="color:var(--dw-orange)">${draftedCands}</div><div class="stat-lbl">임시저장 (미제출)</div></div>
+      <div class="stat-card c4"><div class="stat-icon">📊</div><div class="stat-val">${avg}</div><div class="stat-lbl">평균 점수 / ${TOTAL_MAX}</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+      <div class="settings-card">
+        <div class="settings-card-title">등급 분포</div>
+        ${['S','A','B+','B','C'].map(g=>{
+          const cnt=grades[g]; const pct=allEvals.length?Math.round(cnt/allEvals.length*100):0;
+          const desc={S:'95%+',A:'90%+','B+':'85%+',B:'80%+',C:'~79%'}[g];
+          return `<div class="grade-row"><div class="grade-row-lbl" style="color:${gradeColors[g]}">${g}</div><div style="font-size:10px;color:var(--text4);width:40px;flex-shrink:0">${desc}</div><div class="grade-row-bar"><div class="grade-row-fill" style="width:${pct}%;background:${gradeColors[g]}"></div></div><div class="grade-row-cnt">${cnt}명</div></div>`;
+        }).join('')}
+      </div>
+      <div class="settings-card">
+        <div class="settings-card-title">항목별 평균</div>
+        ${CRITERIA.map(cr=>{
+          const vals=allEvals.map(e=>e.ev.scores[cr.key]||0);
+          const a=vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):'-';
+          const pct=vals.length?Math.round(parseFloat(a)/cr.max*100):0;
+          return `<div class="grade-row"><div style="font-size:11px;font-weight:700;width:40px;flex-shrink:0;color:var(--text2)">${cr.num}</div><div style="font-size:10px;color:var(--text3);flex:0 0 auto;margin-right:4px">${cr.ko.slice(0,18)}…</div><div class="grade-row-bar" style="flex:1"><div class="grade-row-fill" style="width:${pct}%;background:var(--dw-orange)"></div></div><div class="grade-row-cnt">${a}</div></div>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-toolbar"><div class="table-title">전체 평가 현황</div><div style="font-size:12px;color:var(--text3)">${totalCands}명</div></div>
+      <table class="tbl">
+        <thead><tr><th>이름</th><th>사번</th><th>1차OJT</th><th>2차OJT</th><th>과제명</th><th>총점</th><th>등급</th><th>상태</th></tr></thead>
+        <tbody>${CANDIDATES.map(c=>{
+          const finalEv=Object.keys(REVIEWERS).map(rvId=>evalData[getEvalKey(rvId,c.id)]).find(e=>e?.finalSubmitted);
+          const draftEv=Object.keys(REVIEWERS).map(rvId=>evalData[getEvalKey(rvId,c.id)]).find(e=>e?.drafted&&!e?.finalSubmitted);
+          const total=finalEv?calcTotal(finalEv):null; const gr=finalEv?getGrade(total):null;
+          const statusClass=finalEv?'badge-done':draftEv?'badge-draft':'badge-todo';
+          const statusLabel=finalEv?'✅ 최종제출':draftEv?'💾 임시저장':'미작성';
+          return `<tr onclick="openCandModal('${c.id}')">
+            <td class="td-name">${c.name}</td><td class="td-id">${c.id}</td>
+            <td><span class="dept-tag">${c.ojt1||c.dept||'-'}</span></td>
+            <td><span class="dept-tag">${c.ojt2||'-'}</span></td>
+            <td style="font-size:12px;color:var(--text2)">${c.project||'-'}</td>
+            <td>${total!==null?`<div class="score-cell"><div class="mini-bar"><div class="mini-bar-fill" style="width:${Math.round(total/TOTAL_MAX*100)}%"></div></div><span class="score-txt">${total}/${TOTAL_MAX}</span></div>`:'<span style="color:var(--text4)">-</span>'}</td>
+            <td>${gr?`<span style="font-family:Bebas Neue;font-size:16px;color:${gradeColors[gr]}">${gr}</span>`:'-'}</td>
+            <td><span class="badge-status ${statusClass}">${statusLabel}</span></td>
+          </tr>`;
+        }).join('')}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderAdminList() {
+  document.getElementById('admin-body').innerHTML=`
+    <div class="table-card">
+      <div class="table-toolbar"><div class="table-title">전체 인원 목록</div>
+        <select class="filter-sel" onchange="adminListFilter(this)">
+          <option value="">전체 상태</option>
+          <option value="done">✅ 최종제출</option>
+          <option value="draft">💾 임시저장</option>
+          <option value="todo">미작성</option>
+        </select>
+      </div>
+      <table class="tbl" id="admin-list-tbl">
+        <thead><tr><th>#</th><th>이름</th><th>사번</th><th>부서</th><th>과제명</th><th>그룹</th><th>총점</th><th>등급</th><th>상태</th></tr></thead>
+        <tbody>${renderAdminListRows('')}</tbody>
+      </table>
+    </div>`;
+}
+function renderAdminListRows(filter) {
+  const gradeColors={S:'#1a6b3a',A:'#1a4f6b','B+':'#4a3a8c',B:'#7a5c10',C:'#8c3a2a'};
+  return CANDIDATES.filter(c=>{
+    const evs=Object.keys(REVIEWERS).map(rvId=>evalData[getEvalKey(rvId,c.id)]);
+    const hasFinal=evs.some(e=>e?.finalSubmitted); const hasDraft=evs.some(e=>e?.drafted&&!e?.finalSubmitted);
+    if(filter==='done'&&!hasFinal) return false;
+    if(filter==='draft'&&!hasDraft) return false;
+    if(filter==='todo'&&(hasFinal||hasDraft)) return false;
+    return true;
+  }).map((c,i)=>{
+    const finalEv=Object.keys(REVIEWERS).map(rvId=>evalData[getEvalKey(rvId,c.id)]).find(e=>e?.finalSubmitted);
+    const draftEv=Object.keys(REVIEWERS).map(rvId=>evalData[getEvalKey(rvId,c.id)]).find(e=>e?.drafted&&!e?.finalSubmitted);
+    const total=finalEv?calcTotal(finalEv):null; const gr=finalEv?getGrade(total):null;
+    const statusClass=finalEv?'badge-done':draftEv?'badge-draft':'badge-todo';
+    const statusLabel=finalEv?'✅ 최종제출':draftEv?'💾 임시저장':'미작성';
+    return `<tr onclick="openCandModal('${c.id}')">
+      <td style="color:var(--text4)">${String(i+1).padStart(2,'0')}</td>
+      <td class="td-name">${c.name}</td><td class="td-id">${c.id}</td>
+      <td><span class="dept-tag">${c.dept||'-'}</span></td>
+      <td style="font-size:12px;color:var(--text2)">${c.project||'-'}</td>
+      <td style="font-size:12px;color:var(--text2)">${c.group||'-'}</td>
+      <td>${total!==null?`<b style="color:var(--dw-orange)">${total}/${TOTAL_MAX}</b>`:'<span style="color:var(--text4)">-</span>'}</td>
+      <td>${gr?`<span style="font-family:Bebas Neue;font-size:16px;color:${gradeColors[gr]}">${gr}</span>`:'-'}</td>
+      <td><span class="badge-status ${statusClass}">${statusLabel}</span></td>
+    </tr>`;
+  }).join('')||`<tr><td colspan="9" style="text-align:center;padding:28px;color:var(--text4)">해당 조건의 인원이 없습니다</td></tr>`;
+}
+function adminListFilter(sel) { const tb=document.querySelector('#admin-list-tbl tbody'); if(tb) tb.innerHTML=renderAdminListRows(sel.value); }
+
+/* ── 대상자 관리 ── */
+let candMgrTab='list', candEditId=null;
+function renderAdminCandidates() {
+  document.getElementById('admin-body').innerHTML=`
+    <div style="display:flex;gap:2px;margin-bottom:20px;border-bottom:2px solid var(--border)">
+      <button class="cmgr-tab ${candMgrTab==='list'?'cmgr-active':''}" onclick="setCandTab('list')">📋 인원 목록</button>
+      <button class="cmgr-tab ${candMgrTab==='import'?'cmgr-active':''}" onclick="setCandTab('import')">☁️ Sheets 불러오기</button>
+      <button class="cmgr-tab ${candMgrTab==='form'?'cmgr-active':''}" onclick="setCandTab('form')">${candEditId?'✏️ 수정':'➕ 직접 추가'}</button>
+    </div>
+    <div id="cmgr-content"></div>`;
+  renderCMgrContent();
+}
+function setCandTab(t){candMgrTab=t;if(t!=='form')candEditId=null;renderAdminCandidates();}
+function renderCMgrContent(){
+  const el=document.getElementById('cmgr-content'); if(!el) return;
+  if(candMgrTab==='list') el.innerHTML=renderCandListTab();
+  else if(candMgrTab==='import') el.innerHTML=renderCandImportTab();
+  else el.innerHTML=renderCandFormTab();
+}
+function renderCandListTab(){
+  return `<div class="table-card">
+    <div class="table-toolbar"><div><div class="table-title">평가 대상자 목록</div><div style="font-size:11px;color:var(--text3);margin-top:2px">총 ${CANDIDATES.length}명</div></div>
+      <div style="display:flex;gap:8px"><input class="filter-sel" id="cand-search" placeholder="🔍 검색" oninput="filterCandTable(this.value)" style="width:160px"><button class="add-btn" onclick="openNewCandForm()">+ 추가</button></div>
+    </div>
+    <table class="tbl"><thead><tr><th>#</th><th>이름</th><th>사번</th><th>1차OJT</th><th>2차OJT</th><th>과제명</th><th>그룹</th><th>평가상태</th><th>관리</th></tr></thead>
+    <tbody id="admin-cand-tbody">${renderCandTableRows('')}</tbody></table></div>`;
+}
+function filterCandTable(q){const tb=document.getElementById('admin-cand-tbody');if(tb)tb.innerHTML=renderCandTableRows(q);}
+function getGroupOfCand(candId){const g=Object.entries(GROUPS).find(([,g])=>g.candidates.includes(candId));return g?g[1].name:null;}
+function renderCandTableRows(q=''){
+  const list=q?CANDIDATES.filter(c=>c.name.includes(q)||c.id.includes(q)):CANDIDATES;
+  if(!list.length) return `<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--text4)">대상자가 없습니다</td></tr>`;
+  return list.map((c,i)=>{
+    const finalEv=Object.keys(REVIEWERS).map(rvId=>evalData[getEvalKey(rvId,c.id)]).find(e=>e?.finalSubmitted);
+    const grp=getGroupOfCand(c.id);
+    return `<tr><td style="color:var(--text4)">${String(i+1).padStart(2,'0')}</td>
+      <td class="td-name">${c.name}</td><td class="td-id">${c.id}</td>
+      <td><span class="dept-tag">${c.ojt1||c.dept||'-'}</span></td>
+      <td><span class="dept-tag">${c.ojt2||'-'}</span></td>
+      <td style="font-size:12px;color:var(--text2);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.project||'-'}</td>
+      <td style="font-size:12px;color:var(--text2)">${grp||'<span style="color:var(--text4)">미배정</span>'}</td>
+      <td><span class="badge-status ${finalEv?'badge-done':'badge-todo'}">${finalEv?'완료':'미완료'}</span></td>
+      <td onclick="event.stopPropagation()"><div style="display:flex;gap:4px">
+        <button onclick="editCand('${c.id}')" style="padding:4px 10px;background:var(--surface2);border:1px solid var(--border);font-size:11px;cursor:pointer;font-family:inherit;color:var(--text2)">수정</button>
+        <button onclick="deleteCand('${c.id}')" style="padding:4px 10px;background:rgba(200,65,10,0.07);border:1px solid rgba(200,65,10,0.2);font-size:11px;cursor:pointer;font-family:inherit;color:var(--red)">삭제</button>
+      </div></td></tr>`;
+  }).join('');
+}
+function openNewCandForm(){candEditId=null;setCandTab('form');}
+function editCand(id){candEditId=id;setCandTab('form');}
+function deleteCand(id){
+  const c=CANDIDATES.find(x=>x.id===id); if(!c) return;
+  if(!confirm(`'${c.name}' 님을 삭제하시겠습니까?`)) return;
+  CANDIDATES.splice(CANDIDATES.findIndex(x=>x.id===id),1);
+  Object.values(GROUPS).forEach(g=>{g.candidates=g.candidates.filter(cid=>cid!==id);});
+  saveToLS(); renderAdminCandidates(); showToast('🗑 '+c.name+' 님이 삭제되었습니다');
+}
+function renderCandFormTab(){
+  const c=candEditId?CANDIDATES.find(x=>x.id===candEditId):null;
+  const groupOptions=Object.entries(GROUPS).map(([gid,g])=>`<option value="${gid}" ${getGroupOfCand(candEditId||'')=== g.name?'selected':''}>${g.name}</option>`).join('');
+  return `<div style="display:grid;grid-template-columns:480px 1fr;gap:20px;align-items:start">
+    <div class="settings-card">
+      <div class="settings-card-title">${c?c.name+' 님 수정':'대상자 추가'}</div>
+      <div class="form-group"><label class="form-label">이름 *</label><input class="form-input" id="cf-name" placeholder="홍길동" value="${c?.name||''}"></div>
+      <div class="form-group"><label class="form-label">사번 *</label><input class="form-input" id="cf-id" placeholder="2222222" maxlength="10" value="${c?.id||''}" ${c?'disabled':''}></div>
+      <div class="form-group"><label class="form-label">1차 OJT</label><input class="form-input" id="cf-ojt1" placeholder="인사팀" value="${c?.ojt1||''}"></div>
+      <div class="form-group"><label class="form-label">2차 OJT</label><input class="form-input" id="cf-ojt2" placeholder="기획팀" value="${c?.ojt2||''}"></div>
+      <div class="form-group"><label class="form-label">과제명</label><input class="form-input" id="cf-project" placeholder="과제 제목" value="${c?.project||''}"></div>
+      <div class="form-group"><label class="form-label">그룹명</label><input class="form-input" id="cf-group-text" placeholder="그룹명" value="${c?.group||''}"></div>
+      <div class="form-group"><label class="form-label">그룹 배정</label>
+        <select class="form-input" id="cf-group-sel" style="cursor:pointer"><option value="">— 배정 없음 —</option>${groupOptions}</select></div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="save-settings" style="margin-top:0;flex:1" onclick="saveCandForm()">💾 ${c?'수정 저장':'추가'}</button>
+        <button class="save-settings" style="margin-top:0;background:var(--surface2);color:var(--text2);width:80px" onclick="setCandTab('list')">취소</button>
+      </div>
+    </div>
+    <div class="settings-card">
+      <div class="settings-card-title" style="margin-bottom:12px">현재 등록 인원 (${CANDIDATES.length}명)</div>
+      <div style="max-height:400px;overflow-y:auto">
+        ${CANDIDATES.map(x=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px solid var(--border);${candEditId===x.id?'background:rgba(232,119,34,0.06);':''}">
+          <div style="flex:1"><div style="font-size:13px;font-weight:${candEditId===x.id?'800':'600'}">${x.name}</div><div style="font-size:11px;color:var(--text3)">${x.id} · ${x.ojt1||'-'} → ${x.ojt2||'-'}</div></div>
+          <button onclick="editCand('${x.id}')" style="padding:3px 8px;background:none;border:1px solid var(--border);font-size:11px;cursor:pointer;font-family:inherit;color:var(--text3)">수정</button>
+        </div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+function saveCandForm(){
+  const name=document.getElementById('cf-name')?.value.trim();
+  const id=candEditId||document.getElementById('cf-id')?.value.trim();
+  const ojt1=document.getElementById('cf-ojt1')?.value.trim()||'';
+  const ojt2=document.getElementById('cf-ojt2')?.value.trim()||'';
+  const project=document.getElementById('cf-project')?.value.trim()||'';
+  const groupText=document.getElementById('cf-group-text')?.value.trim()||'';
+  const groupSelId=document.getElementById('cf-group-sel')?.value;
+  if(!name||!id){showToast('⚠ 이름과 사번은 필수입니다');return;}
+  if(candEditId){const idx=CANDIDATES.findIndex(c=>c.id===candEditId);if(idx>=0)CANDIDATES[idx]={id:candEditId,name,ojt1,ojt2,project,group:groupText};showToast('✅ 정보가 수정되었습니다');}
+  else{if(CANDIDATES.find(c=>c.id===id)){showToast('⚠ 이미 존재하는 사번입니다');return;}CANDIDATES.push({id,name,ojt1,ojt2,project,group:groupText});showToast('✅ '+name+' 님이 추가되었습니다');}
+  Object.values(GROUPS).forEach(g=>{g.candidates=g.candidates.filter(cid=>cid!==id);});
+  if(groupSelId&&GROUPS[groupSelId]){if(!GROUPS[groupSelId].candidates.includes(id))GROUPS[groupSelId].candidates.push(id);}
+  saveToLS(); candEditId=null; setCandTab('list');
+}
+
+/* Sheets import */
+let sheetsPreviewRows=[],sheetsHeaders=[],colMap={id:'',name:'',ojt1:'',ojt2:'',project:'',group:''};
+function renderCandImportTab(){
+  const hasUrl=!!SHEETS_CONFIG.scriptUrl;
+  return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+    <div class="settings-card">
+      <div class="settings-card-title">Google Sheets에서 불러오기</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:16px;line-height:1.8">
+        <b>권장 헤더:</b> 사번 | 이름 | 1차OJT | 2차OJT | 과제명 | 그룹
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+        <div class="status-dot ${hasUrl?'ok':''}"></div>
+        <span style="font-size:12px;color:var(--text3)">${hasUrl?'Apps Script 연동됨':'URL 미설정 — Google Sheets 탭에서 입력 필요'}</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">시트(탭) 이름</label>
+        <div style="display:flex;gap:8px">
+          <input class="form-input" id="rv-sheet-name" placeholder="인턴목록" value="${SHEETS_CONFIG.sheetName||'인턴목록'}" style="flex:1">
+          <button class="add-btn" style="padding:10px 18px" onclick="fetchCandsFromSheets()" ${!hasUrl?'disabled':''}>📥 불러오기</button>
+        </div>
+        <div id="rv-import-status" style="margin-top:8px;font-size:12px;color:var(--text3)"></div>
+      </div>
+    </div>
+    <div id="rv-import-right"><div class="settings-card" style="text-align:center;padding:48px 24px;color:var(--text4)"><div style="font-size:32px;margin-bottom:10px">☁️</div><div style="font-size:13px">불러오면 여기에 미리보기가 표시됩니다</div></div></div>
+  </div>`;
+}
+/* ── Sheets 데이터 불러오기 헬퍼 ── */
+async function fetchSheetData(sheetName) {
+  const url = `${SHEETS_CONFIG.scriptUrl}?sheet=${encodeURIComponent(sheetName)}`;
+  const res = await fetch(url, { redirect: 'follow' });
+  const text = await res.text();
+  try {
+    return JSON.parse(text);
+  } catch(e) {
+    throw new Error('응답 파싱 실패');
+  }
+}
+
+async function fetchCandsFromSheets(){
+  if(!SHEETS_CONFIG.scriptUrl){showToast('⚠ 먼저 Google Sheets 탭에서 URL을 입력하세요');return;}
+  const sheetName=document.getElementById('rv-sheet-name')?.value.trim()||'인턴목록';
+  SHEETS_CONFIG.sheetName=sheetName; saveToLS();
+  const statusEl=document.getElementById('rv-import-status');
+  if(statusEl)statusEl.innerHTML='<span style="color:var(--dw-orange)">⏳ 불러오는 중...</span>';
+  try{
+    const json = await fetchSheetData(sheetName);
+    if(!Array.isArray(json)||json.length<2){if(statusEl)statusEl.innerHTML='<span style="color:var(--red)">⚠ 데이터 없음 — 시트명을 확인해주세요</span>';return;}
+    sheetsHeaders=json[0].map(String); sheetsPreviewRows=json.slice(1).filter(r=>r.some(c=>c!==''));
+    const tryMatch=kws=>{const idx=sheetsHeaders.findIndex(h=>kws.some(k=>h.trim().toLowerCase().replace(/\s/g,'')==k||h.trim().toLowerCase().includes(k)));return idx>=0?sheetsHeaders[idx]:'';}
+    colMap.id      = tryMatch(['사번','id','직원번호']);
+    colMap.name    = tryMatch(['이름','name','성명']);
+    colMap.ojt1    = tryMatch(['1차ojt','1차','ojt1']);
+    colMap.ojt2    = tryMatch(['2차ojt','2차','ojt2']);
+    colMap.project = tryMatch(['과제명','과제','project']);
+    colMap.group   = tryMatch(['그룹','group','팀']);
+    if(statusEl)statusEl.innerHTML=`<span style="color:var(--green)">✅ ${sheetsPreviewRows.length}행 불러옴</span>`;
+    const panel=document.getElementById('rv-import-right');
+    if(panel)panel.innerHTML=renderCandImportPreview();
+  }catch(err){
+    if(statusEl)statusEl.innerHTML=`<span style="color:var(--red)">⚠ 연결 실패: ${err.message}</span>`;
+  }
+}
+function renderCandImportPreview(){
+    const colOption=f=>sheetsHeaders.map(h=>`<option value="${h}" ${colMap[f]===h?'selected':''}>${h}</option>`).join('');
+  return `<div class="settings-card">
+    <div class="settings-card-title">컬럼 매핑 및 적용</div>
+    ${[{f:'id',l:'사번 *'},{f:'name',l:'이름 *'},{f:'ojt1',l:'1차OJT'},{f:'ojt2',l:'2차OJT'},{f:'project',l:'과제명'},{f:'group',l:'그룹'}].map(({f,l})=>`
+      <div class="col-map-row"><span class="col-map-label">${l}</span>
+        <select class="col-map-sel" onchange="colMap['${f}']=this.value"><option value="">— 선택 안 함 —</option>${colOption(f)}</select>
+      </div>`).join('')}
+    <div style="margin:12px 0 8px;font-size:11px;font-weight:800;color:var(--text3)">미리보기 (상위 5행)</div>
+    <div style="overflow-x:auto;margin-bottom:12px"><table class="preview-table">
+      <thead><tr>${sheetsHeaders.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+      <tbody>${sheetsPreviewRows.slice(0,5).map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table></div>
+    <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;margin-bottom:10px"><input type="checkbox" id="import-overwrite"> 기존 인원 덮어쓰기 (사번 기준)</label>
+    <button class="save-settings" style="margin-top:0" onclick="applyCandImport()">✅ ${sheetsPreviewRows.length}명 가져오기</button>
+    <div id="import-result" style="margin-top:12px"></div>
+  </div>`;
+}
+function applyCandImport(){
+  if(!colMap.id||!colMap.name){showToast('⚠ 사번·이름 컬럼은 필수입니다');return;}
+  const hIdx=f=>sheetsHeaders.indexOf(colMap[f]);
+  const ii=hIdx('id'),ni=hIdx('name'),o1i=hIdx('ojt1'),o2i=hIdx('ojt2'),pi=hIdx('project'),gi=hIdx('group');
+  const overwrite=document.getElementById('import-overwrite')?.checked;
+  let added=0,updated=0,skipped=0; const results=[];
+  sheetsPreviewRows.forEach((row,ri)=>{
+    const id=String(row[ii]||'').trim(),name=String(row[ni]||'').trim();
+    const ojt1=o1i>=0?String(row[o1i]||'').trim():'';
+    const ojt2=o2i>=0?String(row[o2i]||'').trim():'';
+    const project=pi>=0?String(row[pi]||'').trim():'';
+    const group=gi>=0?String(row[gi]||'').trim():'';
+    if(!id){results.push({type:'err',msg:`행 ${ri+2}: 사번 없음`});return;}
+    if(!name){results.push({type:'err',msg:`행 ${ri+2}: 이름 없음`});return;}
+    const idx=CANDIDATES.findIndex(c=>c.id===id);
+    if(idx>=0){if(overwrite){CANDIDATES[idx]={id,name,ojt1,ojt2,project,group};updated++;results.push({type:'skip',msg:`${name}(${id}) — 업데이트`});}else{skipped++;results.push({type:'skip',msg:`${name}(${id}) — 건너뜀`});}}
+    else{CANDIDATES.push({id,name,ojt1,ojt2,project,group});added++;results.push({type:'ok',msg:`${name}(${id}) — 추가됨`});}
+  });
+  saveToLS();
+  const el=document.getElementById('import-result');
+  if(el)el.innerHTML=`<div style="font-size:12px;font-weight:800;color:var(--text2);margin-bottom:8px">추가 ${added}명 · 업데이트 ${updated}명 · 건너뜀 ${skipped}명</div><div style="max-height:160px;overflow-y:auto">${results.slice(0,20).map(r=>`<div class="import-result-row import-${r.type}">${r.type==='ok'?'✓':'→'} ${r.msg}</div>`).join('')}</div>`;
+  showToast(`✅ ${added}명 추가, ${updated}명 업데이트`);
+}
+
+/* ── 평가자 관리 ── */
+let rvMgrTab='list', rvEditId=null;
+function renderAdminReviewers(){
+  document.getElementById('admin-body').innerHTML=`
+    <div style="display:flex;gap:2px;margin-bottom:20px;border-bottom:2px solid var(--border)">
+      <button class="cmgr-tab ${rvMgrTab==='list'?'cmgr-active':''}" onclick="setRvTab('list')">👤 평가자 목록</button>
+      <button class="cmgr-tab ${rvMgrTab==='import'?'cmgr-active':''}" onclick="setRvTab('import')">☁️ Sheets 불러오기</button>
+    </div>
+    <div id="rv-mgr-content"></div>`;
+  renderRvMgrContent();
+}
+function setRvTab(t){rvMgrTab=t;rvEditId=null;renderAdminReviewers();}
+function renderRvMgrContent(){const el=document.getElementById('rv-mgr-content');if(!el)return;if(rvMgrTab==='list')el.innerHTML=renderRvListTab();else el.innerHTML=renderRvImportTabUI();}
+function renderRvListTab(){
+  return `<div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
+    <div class="table-card">
+      <div class="table-toolbar"><div><div class="table-title">평가자 목록</div><div style="font-size:11px;color:var(--text3);margin-top:2px">총 ${Object.keys(REVIEWERS).length}명</div></div><button class="add-btn" onclick="openRvForm(null)">+ 평가자 추가</button></div>
+      <table class="tbl"><thead><tr><th>#</th><th>사번</th><th>이름</th><th>1차OJT</th><th>2차OJT</th><th>배정 그룹</th><th>관리</th></tr></thead>
+      <tbody id="rv-mgr-tbody">${renderReviewerRows()}</tbody></table>
+    </div>
+    <div class="settings-card" id="rv-form-card">
+      <div class="settings-card-title" id="rv-form-title">평가자 추가</div>
+      <div class="form-group"><label class="form-label">사번 *</label><input class="form-input" id="rf-id" placeholder="예: 2222222" maxlength="7" type="text"><div id="rf-id-hint" style="font-size:11px;color:var(--text4);margin-top:4px"></div></div>
+      <div class="form-group"><label class="form-label">이름 *</label><input class="form-input" id="rf-name" placeholder="홍길동"></div>
+      <div class="form-group"><label class="form-label">1차 OJT</label><input class="form-input" id="rf-ojt1" placeholder="인사팀"></div>
+      <div class="form-group"><label class="form-label">2차 OJT</label><input class="form-input" id="rf-ojt2" placeholder="기획팀"></div>
+      <div class="form-group"><label class="form-label">비밀번호 *</label><input class="form-input" id="rf-pw" placeholder="초기 비밀번호" type="text" style="font-family:monospace;letter-spacing:2px"><div style="font-size:11px;color:var(--text4);margin-top:4px">수정 시 비워두면 기존 유지</div></div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="save-settings" style="margin-top:0;flex:1" onclick="saveRvForm()">💾 <span id="rv-save-label">추가</span></button>
+        <button class="save-settings" style="margin-top:0;background:var(--surface2);color:var(--text2);width:80px" onclick="cancelRvForm()">취소</button>
+      </div>
+    </div>
+  </div>`;
+}
+function renderReviewerRows(){
+  const entries=Object.entries(REVIEWERS);
+  if(!entries.length) return `<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text4)">등록된 평가자가 없습니다</td></tr>`;
+  return entries.map(([id,rv],i)=>{
+    const assignedGroups=Object.values(GROUPS).filter(g=>g.reviewers.includes(id)).map(g=>g.name);
+    return `<tr><td style="color:var(--text4)">${String(i+1).padStart(2,'0')}</td><td class="td-id">${id}</td><td class="td-name">${rv.name}</td>
+      <td><span class="dept-tag">${rv.ojt1||rv.dept||'-'}</span></td>
+      <td><span class="dept-tag">${rv.ojt2||'-'}</span></td>
+      <td style="font-size:12px;color:var(--text2)">${assignedGroups.join(', ')||'<span style="color:var(--text4)">미배정</span>'}</td>
+      <td><div style="display:flex;gap:4px">
+        <button onclick="openRvForm('${id}')" style="padding:4px 10px;background:var(--surface2);border:1px solid var(--border);font-size:11px;cursor:pointer;font-family:inherit;color:var(--text2)">수정</button>
+        <button onclick="deleteReviewer('${id}')" style="padding:4px 10px;background:rgba(200,65,10,0.07);border:1px solid rgba(200,65,10,0.2);font-size:11px;cursor:pointer;font-family:inherit;color:var(--red)">삭제</button>
+      </div></td></tr>`;
+  }).join('');
+}
+function openRvForm(id){
+  rvEditId=id; if(rvMgrTab!=='list'){rvMgrTab='list';renderAdminReviewers();return;}
+  const title=document.getElementById('rv-form-title'); const label=document.getElementById('rv-save-label');
+  const idInput=document.getElementById('rf-id'); const hint=document.getElementById('rf-id-hint');
+  if(id){const rv=REVIEWERS[id];if(!rv)return;if(title)title.textContent=rv.name+' 님 수정';if(label)label.textContent='수정 저장';if(idInput){idInput.value=id;idInput.disabled=true;}if(hint)hint.textContent='사번은 변경 불가';
+    document.getElementById('rf-name').value=rv.name;
+    document.getElementById('rf-ojt1').value=rv.ojt1||rv.dept||'';
+    document.getElementById('rf-ojt2').value=rv.ojt2||'';
+    document.getElementById('rf-pw').value=rv.pw;}
+  else{if(title)title.textContent='평가자 추가';if(label)label.textContent='추가';if(idInput){idInput.value='';idInput.disabled=false;}if(hint)hint.textContent='';
+    ['rf-name','rf-ojt1','rf-ojt2','rf-pw'].forEach(x=>{const e=document.getElementById(x);if(e)e.value='';});}
+}
+function cancelRvForm(){rvEditId=null;renderAdminReviewers();}
+function saveRvForm(){
+  const id=rvEditId||document.getElementById('rf-id')?.value.trim();
+  const name=document.getElementById('rf-name')?.value.trim();
+  const ojt1=document.getElementById('rf-ojt1')?.value.trim()||'';
+  const ojt2=document.getElementById('rf-ojt2')?.value.trim()||'';
+  const pw=document.getElementById('rf-pw')?.value.trim();
+  if(!id){showToast('⚠ 사번을 입력해주세요');return;}if(!name){showToast('⚠ 이름을 입력해주세요');return;}if(!pw&&!rvEditId){showToast('⚠ 비밀번호를 입력해주세요');return;}
+  if(rvEditId){REVIEWERS[rvEditId]={pw:pw||REVIEWERS[rvEditId].pw,name,ojt1,ojt2};showToast('✅ '+name+' 님 정보 수정');}
+  else{if(REVIEWERS[id]){showToast('⚠ 이미 등록된 사번');return;}REVIEWERS[id]={pw,name,ojt1,ojt2};showToast('✅ '+name+' 님 추가');}
+  saveToLS(); rvEditId=null; const tb=document.getElementById('rv-mgr-tbody'); if(tb)tb.innerHTML=renderReviewerRows(); openRvForm(null);
+}
+function deleteReviewer(id){
+  const rv=REVIEWERS[id];if(!rv)return;if(!confirm(`'${rv.name}' 님을 삭제하시겠습니까?`))return;
+  delete REVIEWERS[id]; Object.values(GROUPS).forEach(g=>{g.reviewers=g.reviewers.filter(r=>r!==id);});
+  saveToLS(); const tb=document.getElementById('rv-mgr-tbody'); if(tb)tb.innerHTML=renderReviewerRows(); showToast('🗑 '+rv.name+' 님 삭제');
+}
+let rvSheetsPreview=[],rvSheetsHeaders=[],rvColMap={id:'',name:'',ojt1:'',ojt2:'',pw:''};
+function renderRvImportTabUI(){
+  const hasUrl=!!SHEETS_CONFIG.scriptUrl;
+  return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+    <div class="settings-card">
+      <div class="settings-card-title">Google Sheets에서 평가자 불러오기</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:16px;line-height:1.8"><b>권장 헤더:</b> 사번 | 이름 | 부서 | 비밀번호</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><div class="status-dot ${hasUrl?'ok':''}"></div><span style="font-size:12px;color:var(--text3)">${hasUrl?'연동됨':'URL 미설정'}</span></div>
+      <div class="form-group"><label class="form-label">시트명</label><div style="display:flex;gap:8px"><input class="form-input" id="rv-sheet-name2" placeholder="평가자목록" value="평가자목록" style="flex:1"><button class="add-btn" style="padding:10px 18px" onclick="fetchRvsFromSheets()" ${!hasUrl?'disabled':''}>📥 불러오기</button></div><div id="rv-import-status2" style="margin-top:8px;font-size:12px;color:var(--text3)"></div></div>
+    </div>
+    <div id="rv-import-right2"><div class="settings-card" style="text-align:center;padding:48px 24px;color:var(--text4)"><div style="font-size:32px;margin-bottom:10px">☁️</div><div style="font-size:13px">불러오면 여기에 미리보기</div></div></div>
+  </div>`;
+}
+async function fetchRvsFromSheets(){
+  if(!SHEETS_CONFIG.scriptUrl)return;
+  const sheetName=document.getElementById('rv-sheet-name2')?.value.trim()||'평가자목록';
+  const statusEl=document.getElementById('rv-import-status2');
+  if(statusEl)statusEl.innerHTML='<span style="color:var(--dw-orange)">⏳ 불러오는 중...</span>';
+  try{
+    const json = await fetchSheetData(sheetName);
+    if(!Array.isArray(json)||json.length<2){if(statusEl)statusEl.innerHTML='<span style="color:var(--red)">⚠ 데이터 없음 — 시트명을 확인해주세요</span>';return;}
+    rvSheetsHeaders=json[0].map(String); rvSheetsPreview=json.slice(1).filter(r=>r.some(c=>c!==''));
+    const tryMatch=kws=>{const idx=rvSheetsHeaders.findIndex(h=>kws.some(k=>h.trim().toLowerCase().includes(k)));return idx>=0?rvSheetsHeaders[idx]:'';}
+    rvColMap.id   = tryMatch(['사번','id']);
+    rvColMap.name = tryMatch(['이름','name']);
+    rvColMap.ojt1 = tryMatch(['1차ojt','1차','ojt1']);
+    rvColMap.ojt2 = tryMatch(['2차ojt','2차','ojt2']);
+    rvColMap.pw   = tryMatch(['비밀번호','password','pw','패스워드']);
+    if(statusEl)statusEl.innerHTML=`<span style="color:var(--green)">✅ ${rvSheetsPreview.length}명 불러옴</span>`;
+    const panel=document.getElementById('rv-import-right2');
+    const colOpt=f=>rvSheetsHeaders.map(h=>`<option value="${h}" ${rvColMap[f]===h?'selected':''}>${h}</option>`).join('');
+    if(panel)panel.innerHTML=`<div class="settings-card">
+      <div class="settings-card-title">컬럼 매핑</div>
+      ${[{f:'id',l:'사번 *'},{f:'name',l:'이름 *'},{f:'ojt1',l:'1차OJT'},{f:'ojt2',l:'2차OJT'},{f:'pw',l:'비밀번호'}].map(({f,l})=>`<div class="col-map-row"><span class="col-map-label">${l}</span><select class="col-map-sel" onchange="rvColMap['${f}']=this.value"><option value="">—</option>${colOpt(f)}</select></div>`).join('')}
+      <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;margin:10px 0"><input type="checkbox" id="rv-overwrite"> 기존 평가자 덮어쓰기</label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;margin-bottom:12px"><input type="checkbox" id="rv-default-pw" checked> 비밀번호 없으면 사번으로 설정</label>
+      <button class="save-settings" style="margin-top:0" onclick="applyRvImport()">✅ ${rvSheetsPreview.length}명 등록</button>
+      <div id="rv-apply-result" style="margin-top:12px"></div>
+    </div>`;
+  }catch(err){
+    if(statusEl)statusEl.innerHTML=`<span style="color:var(--red)">⚠ 연결 실패: ${err.message}</span>`;
+  }
+}
+function applyRvImport(){
+  if(!rvColMap.id||!rvColMap.name){showToast('⚠ 사번·이름 필수');return;}
+  const hIdx=f=>rvSheetsHeaders.indexOf(rvColMap[f]);
+  const ii=hIdx('id'),ni=hIdx('name'),o1i=hIdx('ojt1'),o2i=hIdx('ojt2'),pi=hIdx('pw');
+  const overwrite=document.getElementById('rv-overwrite')?.checked;
+  const defaultPw=document.getElementById('rv-default-pw')?.checked;
+  let added=0,updated=0; const results=[];
+  rvSheetsPreview.forEach((row,ri)=>{
+    const id=String(row[ii]||'').trim(),name=String(row[ni]||'').trim();
+    const ojt1=o1i>=0?String(row[o1i]||'').trim():'';
+    const ojt2=o2i>=0?String(row[o2i]||'').trim():'';
+    let pw=pi>=0?String(row[pi]||'').trim():''; if(!pw&&defaultPw) pw=id;
+    if(!id||!name||!pw){results.push({type:'err',msg:`행 ${ri+2}: 필수 정보 없음`});return;}
+    if(REVIEWERS[id]){if(overwrite){REVIEWERS[id]={pw,name,ojt1,ojt2};updated++;results.push({type:'skip',msg:`${name}(${id}) — 업데이트`});}else results.push({type:'skip',msg:`${name}(${id}) — 건너뜀`});}
+    else{REVIEWERS[id]={pw,name,ojt1,ojt2};added++;results.push({type:'ok',msg:`${name}(${id}) — 추가됨`});}
+  });
+  saveToLS(); const el=document.getElementById('rv-apply-result');
+  if(el)el.innerHTML=`<div style="font-size:12px;font-weight:800;margin-bottom:8px">추가 ${added}명 · 업데이트 ${updated}명</div><div style="max-height:140px;overflow-y:auto">${results.slice(0,15).map(r=>`<div class="import-result-row import-${r.type}">${r.type==='ok'?'✓':'→'} ${r.msg}</div>`).join('')}</div>`;
+  showToast(`✅ ${added}명 추가, ${updated}명 업데이트`);
+}
+
+/* ── 그룹 매핑 ── */
+function renderAdminGroups(){
+  document.getElementById('admin-body').innerHTML=`
+    <div class="settings-card" style="max-width:800px">
+      <div class="settings-card-title">그룹 매핑 관리</div>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:16px;line-height:1.7">평가자와 평가대상자를 그룹으로 묶어 관리합니다. 피어그룹 평가에서 같은 그룹 내에서만 평가합니다.</p>
+      <div id="groups-container"></div>
+      <button class="add-btn" style="margin-top:8px;padding:10px 20px" onclick="addGroup()">+ 그룹 추가</button>
+      <button class="save-settings" onclick="saveGroups()">💾 그룹 매핑 저장</button>
+    </div>`;
+  renderGroupItems();
+}
+function renderGroupItems(){
+  const container=document.getElementById('groups-container'); if(!container) return;
+  container.innerHTML=Object.entries(GROUPS).map(([gid,g])=>{
+    const isActive=g.active!==false;
+    return `<div class="group-item" style="border-left:3px solid ${isActive?'var(--green)':'var(--red)'}">
+      <div class="group-header">
+        <input class="group-name-input" value="${g.name}" onchange="GROUPS['${gid}'].name=this.value" placeholder="그룹명">
+        <div style="display:flex;align-items:center;gap:8px">
+          <button onclick="GROUPS['${gid}'].active=!(GROUPS['${gid}'].active!==false);saveToLS();renderGroupItems()" style="padding:4px 12px;border:1px solid ${isActive?'var(--green)':'var(--red)'};background:${isActive?'rgba(45,106,79,0.08)':'rgba(200,65,10,0.08)'};color:${isActive?'var(--green)':'var(--red)'};font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">${isActive?'● 활성':'⏸ 비활성'}</button>
+          <button class="group-del" onclick="delGroup('${gid}')">✕</button>
+        </div>
+      </div>
+      ${!isActive?`<div style="padding:8px 12px;background:rgba(200,65,10,0.07);border:1px solid rgba(200,65,10,0.15);font-size:11px;color:var(--red);margin-bottom:12px">⏸ 비활성 그룹 — 평가자 화면에 표시되지 않습니다.</div>`:''}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <div style="font-size:10px;font-weight:800;color:var(--text3);letter-spacing:1.5px;margin-bottom:8px">평가자</div>
+          <div class="group-members">${g.reviewers.map(id=>{const rv=REVIEWERS[id];return `<div class="member-chip">${rv?rv.name:id}<button class="chip-del" onclick="removeFromGroup('${gid}','reviewer','${id}')">✕</button></div>`;}).join('')}</div>
+          <div class="add-input-row"><input class="add-input" id="rv-add-${gid}" placeholder="사번 입력"><button class="add-btn" onclick="addToGroup('${gid}','reviewer')">추가</button></div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:800;color:var(--text3);letter-spacing:1.5px;margin-bottom:8px">평가 대상자 (${g.candidates.length}명)</div>
+          <div class="group-members">${g.candidates.map(id=>{const cand=CANDIDATES.find(c=>c.id===id);return `<div class="member-chip">${cand?cand.name:id}<button class="chip-del" onclick="removeFromGroup('${gid}','candidate','${id}')">✕</button></div>`;}).join('')}</div>
+          <div class="add-input-row">
+            <select class="add-input" id="cand-add-${gid}"><option value="">선택...</option>${CANDIDATES.filter(c=>!g.candidates.includes(c.id)).map(c=>`<option value="${c.id}">${c.name} (${c.dept||c.id})</option>`).join('')}</select>
+            <button class="add-btn" onclick="addToGroup('${gid}','candidate')">추가</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function addGroup(){const gid='g'+(groupIdCounter++);GROUPS[gid]={name:'새 그룹',active:true,reviewers:[],candidates:[]};renderGroupItems();}
+function delGroup(gid){delete GROUPS[gid];renderGroupItems();}
+function addToGroup(gid,type){
+  if(type==='reviewer'){const inp=document.getElementById(`rv-add-${gid}`);const val=inp.value.trim();if(!val)return;if(!GROUPS[gid].reviewers.includes(val))GROUPS[gid].reviewers.push(val);inp.value='';}
+  else{const sel=document.getElementById(`cand-add-${gid}`);const val=sel.value;if(!val)return;if(!GROUPS[gid].candidates.includes(val))GROUPS[gid].candidates.push(val);}
+  renderGroupItems();
+}
+function removeFromGroup(gid,type,id){if(type==='reviewer')GROUPS[gid].reviewers=GROUPS[gid].reviewers.filter(x=>x!==id);else GROUPS[gid].candidates=GROUPS[gid].candidates.filter(x=>x!==id);renderGroupItems();}
+function saveGroups(){saveToLS();showToast('✅ 그룹 매핑이 저장되었습니다');}
+
+/* ── Sheets 설정 ── */
+function renderAdminSheets(){
+  document.getElementById('admin-body').innerHTML=`
+    <div class="settings-card" style="max-width:700px">
+      <div class="settings-card-title">Google Sheets 연동 설정</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px"><div class="status-dot ${SHEETS_CONFIG.connected?'ok':''}" id="sheets-dot"></div><span style="font-size:12px;color:var(--text3)" id="sheets-status-txt">${SHEETS_CONFIG.connected?'연동됨':'미연동'}</span></div>
+      <div class="form-group" style="margin-bottom:16px"><label class="form-label">Apps Script Web App URL</label><input class="form-input" id="sheets-script-url" value="${SHEETS_CONFIG.scriptUrl||''}" placeholder="https://script.google.com/macros/s/.../exec"></div>
+      <div class="form-group" style="margin-bottom:20px"><label class="form-label">Google Sheets URL (참고용)</label><input class="form-input" id="sheets-url" value="${SHEETS_CONFIG.url||''}" placeholder="https://docs.google.com/spreadsheets/d/..."></div>
+      <button class="save-settings" onclick="saveSheetsCfg()">💾 설정 저장</button>
+      <button class="save-settings" style="margin-top:8px;background:var(--surface2);color:var(--text2);border:1px solid var(--border)" onclick="syncFromSheets(false)">🔄 전체 동기화</button>
+    </div>`;
+}
+function saveSheetsCfg(){
+  SHEETS_CONFIG.scriptUrl=document.getElementById('sheets-script-url').value.trim();
+  SHEETS_CONFIG.url=document.getElementById('sheets-url').value.trim();
+  SHEETS_CONFIG.connected=!!SHEETS_CONFIG.scriptUrl; saveToLS();
+  const dot=document.getElementById('sheets-dot'); const txt=document.getElementById('sheets-status-txt');
+  if(dot)dot.className='status-dot '+(SHEETS_CONFIG.connected?'ok':'');
+  if(txt)txt.textContent=SHEETS_CONFIG.connected?'연동됨':'미연동';
+  showToast(SHEETS_CONFIG.connected?'✅ Sheets 설정 저장됨':'⚠ URL을 입력해야 연동됩니다');
+}
+
+/* ── 상세 모달 ── */
+function openCandModal(candId){
+  const c=CANDIDATES.find(x=>x.id===candId); if(!c) return;
+  const gradeColors={S:'#1a6b3a',A:'#1a4f6b','B+':'#4a3a8c',B:'#7a5c10',C:'#8c3a2a'};
+  const allEvals=Object.keys(REVIEWERS).map(rvId=>({rvId,ev:evalData[getEvalKey(rvId,candId)]})).filter(x=>x.ev?.finalSubmitted);
+  const ev=allEvals[0]?.ev; const total=ev?calcTotal(ev):null; const gr=ev?getGrade(total):null;
+  document.getElementById('modal-content').innerHTML=`
+    <div class="modal-name">${c.name}</div>
+    <div class="modal-sub">${c.id} · ${c.dept||'-'} · ${c.project||'-'}</div>
+    ${ev?`
+      <div style="padding:14px 16px;background:var(--dw-orange);color:#fff;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-radius:2px">
+        <span style="font-size:13px;font-weight:700">총점 · Total</span>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:28px">${total} / ${TOTAL_MAX}</span>
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:22px;background:${gradeColors[gr]};padding:2px 10px">${gr}</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">
+        ${CRITERIA.map(cr=>`<div style="padding:10px 12px;background:var(--surface2);border-radius:2px">
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">${cr.num}</div>
+          <div style="font-size:18px;font-weight:800;color:var(--dw-orange)">${ev.scores[cr.key]||0}<small style="font-size:11px;color:var(--text3)">/${cr.max}</small></div>
+        </div>`).join('')}
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div><div style="font-size:10px;font-weight:800;color:var(--green);margin-bottom:6px">잘한점 · Strengths</div><div style="background:var(--surface2);padding:12px;font-size:13px;color:var(--text2);line-height:1.6;border-radius:2px">${ev.good||'(없음)'}</div></div>
+        <div><div style="font-size:10px;font-weight:800;color:var(--dw-orange);margin-bottom:6px">개선점 · Areas for Improvement</div><div style="background:var(--surface2);padding:12px;font-size:13px;color:var(--text2);line-height:1.6;border-radius:2px">${ev.improve||'(없음)'}</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--text4);text-align:right;margin-top:10px">제출: ${ev.submittedAt?new Date(ev.submittedAt).toLocaleString('ko'):'-'}</div>
+    `:`<div class="empty-state" style="padding:40px"><div class="empty-txt">아직 평가가 완료되지 않았습니다</div></div>`}
+  `;
+  document.getElementById('modal').classList.add('open');
+}
+</script>
+</body>
+</html>
