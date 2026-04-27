@@ -717,19 +717,23 @@ async function restoreDraftFromSheet(rvId) {
   try {
     const rows = await fetchSheet('임시저장');
     if (!rows.length) return;
+    // row 구조: [0]rv사번 [1]rv명 [2]ojt1 [3]ojt2
+    //           [4]cand사번 [5]cand명 [6]ojt1 [7]ojt2 [8]과제명
+    //           [9]q1 [10]q2 [11]q3 [12]총점 [13]등급
+    //           [14]잘한점 [15]개선점 [16]시각 [17]상태
     rows.forEach(row => {
       if (String(row[0]||'').trim() !== String(rvId).trim()) return;
       const candId = String(row[4]||'').trim(); if (!candId) return;
       const k = getEvalKey(rvId, candId);
-      if (evalData[k]?.finalSubmitted) return; // 최종제출은 덮어쓰지 않음
+      if (evalData[k]?.finalSubmitted) return;
       evalData[k] = {
         scores: {
           q1: Number(row[9]||0),
           q2: Number(row[10]||0),
           q3: Number(row[11]||0),
         },
-        good:           String(row[12]||''),
-        improve:        String(row[13]||''),
+        good:           String(row[14]||''),
+        improve:        String(row[15]||''),
         drafted:        true,
         finalSubmitted: false,
         submittedAt:    '',
@@ -1699,32 +1703,7 @@ function renderAdminSheets(){
       <div class="form-group" style="margin-bottom:16px"><label class="form-label">Apps Script Web App URL</label><input class="form-input" id="sheets-script-url" value="${SHEETS_CONFIG.scriptUrl||''}" placeholder="https://script.google.com/macros/s/.../exec"></div>
       <div class="form-group" style="margin-bottom:20px"><label class="form-label">Google Sheets URL (참고용)</label><input class="form-input" id="sheets-url" value="${SHEETS_CONFIG.url||''}" placeholder="https://docs.google.com/spreadsheets/d/..."></div>
       <button class="save-settings" onclick="saveSheetsCfg()">💾 설정 저장</button>
-      <div style="margin-top:28px;padding:20px;background:var(--surface2);border:1px solid var(--border)">
-        <div style="font-size:13px;font-weight:800;margin-bottom:12px">📝 Apps Script 코드</div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.9;margin-bottom:12px">1. Google Sheets → 확장 프로그램 → Apps Script<br>2. 아래 코드 붙여넣기 → 배포 → 새 배포 → 웹 앱 → 모든 사용자</div>
-        <div style="background:var(--text);color:#a0ffa0;padding:16px;font-family:monospace;font-size:11px;line-height:1.9;overflow-x:auto">
-function doGet(e) {<br>
-&nbsp;&nbsp;var sh=SpreadsheetApp.getActiveSpreadsheet().getSheetByName(e.parameter.sheet||"인턴목록");<br>
-&nbsp;&nbsp;if(!sh)return ContentService.createTextOutput(JSON.stringify([]));<br>
-&nbsp;&nbsp;return ContentService.createTextOutput(JSON.stringify(sh.getDataRange().getValues())).setMimeType(ContentService.MimeType.JSON);<br>
-}<br><br>
-function doPost(e) {<br>
-&nbsp;&nbsp;var data=JSON.parse(e.postData.contents);<br>
-&nbsp;&nbsp;var ss=SpreadsheetApp.getActiveSpreadsheet();<br>
-&nbsp;&nbsp;var sheet=ss.getSheetByName("평가결과")||ss.insertSheet("평가결과");<br>
-&nbsp;&nbsp;if(sheet.getLastRow()===0){<br>
-&nbsp;&nbsp;&nbsp;&nbsp;sheet.appendRow(["평가자사번","평가자명","평가자부서(1차)","평가자부서(2차)","대상자사번","대상자명","1차OJT","2차OJT","과제명","Q1","Q2","Q3","총점","잘한점","개선점","제출시각"]);<br>
-&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;sheet.appendRow([data.rv_id,data.rv_name,data.rv_dept1,data.rv_dept2,data.cand_id,data.cand_name,data.cand_ojt1,data.cand_ojt2,data.cand_project,data.q1,data.q2,data.q3,data.total,data.good,data.improve,data.submitted_at]);<br>
-&nbsp;&nbsp;return ContentService.createTextOutput(JSON.stringify({status:"ok"})).setMimeType(ContentService.MimeType.JSON);<br>
-}
-        </div>
-        <div style="margin-top:10px;padding:10px;background:#fff9e6;border:1px solid #f0d060;font-size:11px;color:#7a6000;line-height:1.7">
-          💡 <b>인턴목록</b> 시트 헤더: 사번 | 이름 | 1차OJT | 2차OJT | 과제명 | 그룹<br>
-          💡 <b>평가자목록</b> 시트 헤더: 사번 | 이름 | 1차OJT | 2차OJT | 비밀번호<br>
-          💡 <b>평가결과</b> 시트는 시스템이 자동으로 생성합니다.
-        </div>
-      </div>
+      <button class="save-settings" style="margin-top:8px;background:var(--surface2);color:var(--text2);border:1px solid var(--border)" onclick="syncFromSheets(false)">🔄 전체 동기화</button>
     </div>`;
 }
 function saveSheetsCfg(){
