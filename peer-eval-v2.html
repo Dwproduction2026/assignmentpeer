@@ -446,6 +446,10 @@ body { font-family:'Noto Sans KR',sans-serif; background:var(--bg); color:var(--
         시스템 오류 시 담당자에게 문의 바랍니다<br>
         For system errors, please contact the person in charge.
       </div>
+      <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:14px">
+        <button onclick="runDiagnostic()" style="width:100%;padding:9px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text3);cursor:pointer;font-family:inherit">🔍 연결 진단 · Diagnostic</button>
+        <div id="diag-result" style="margin-top:10px;font-size:11px;color:var(--text2);line-height:2;display:none;background:var(--surface2);padding:10px;border:1px solid var(--border)"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -659,11 +663,11 @@ async function syncFromSheets(silent) {
   if (!SHEETS_CONFIG.scriptUrl) return false;
   try {
     const [candRows, rvRows] = await Promise.all([
-      fetchSheet('인원목록'),
+      fetchSheet('인턴목록'),
       fetchSheet('평가자목록'),
     ]);
 
-    console.log('[SYNC] 인원목록 rows:', candRows.length, candRows);
+    console.log('[SYNC] 인턴목록 rows:', candRows.length, candRows);
     console.log('[SYNC] 평가자목록 rows:', rvRows.length, rvRows);
 
     // 인원목록: A사번 B이름 C1차OJT D2차OJT E과제명 F그룹 G활성화(Y/N)
@@ -788,6 +792,38 @@ function closeModal() { document.getElementById('modal').classList.remove('open'
 document.getElementById('modal').addEventListener('click',e=>{ if(e.target===document.getElementById('modal')) closeModal(); });
 
 /* ══ LOGIN ══ */
+// 연결 진단 함수
+async function runDiagnostic() {
+  const el = document.getElementById('diag-result');
+  el.style.display = 'block';
+  el.innerHTML = '⏳ 진단 중...';
+  let html = '';
+
+  html += `📌 Script URL: ${SHEETS_CONFIG.scriptUrl ? '✅ 설정됨' : '❌ 없음'}<br>`;
+  if (!SHEETS_CONFIG.scriptUrl) { el.innerHTML = html; return; }
+
+  try {
+    const rows = await fetchSheet('인턴목록');
+    html += `👥 인턴목록: ${rows.length}행 ${rows.length > 0 ? '✅' : '❌ 데이터없음'}<br>`;
+    if (rows.length > 0) html += `&nbsp;&nbsp;→ ${rows[0][1]} / 그룹:"${rows[0][5]}" / 활성화:"${rows[0][6]}"<br>`;
+  } catch(e) { html += `👥 인턴목록 오류: ${e.message}<br>`; }
+
+  try {
+    const rows = await fetchSheet('평가자목록');
+    html += `👤 평가자목록: ${rows.length}행 ${rows.length > 0 ? '✅' : '❌ 데이터없음'}<br>`;
+    if (rows.length > 0) html += `&nbsp;&nbsp;→ ${rows[0][1]} / 그룹:"${rows[0][5]}" / 활성화:"${rows[0][6]}"<br>`;
+  } catch(e) { html += `👤 평가자목록 오류: ${e.message}<br>`; }
+
+  html += `<br>📊 현재 메모리:<br>`;
+  html += `&nbsp;&nbsp;CANDIDATES: ${CANDIDATES.length}명<br>`;
+  html += `&nbsp;&nbsp;REVIEWERS: ${Object.keys(REVIEWERS).length}명<br>`;
+  html += `&nbsp;&nbsp;GROUPS: ${Object.keys(GROUPS).length}개<br>`;
+  Object.entries(GROUPS).forEach(([,g]) => {
+    html += `&nbsp;&nbsp;&nbsp;&nbsp;[${g.name}] 평가자:${g.reviewers.length} / 인턴:${g.candidates.length}<br>`;
+  });
+  el.innerHTML = html;
+}
+
 function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&tab==='reviewer')||(i===1&&tab==='admin')));
   document.getElementById('pane-reviewer').classList.toggle('d-none',tab!=='reviewer');
